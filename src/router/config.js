@@ -6,7 +6,7 @@ import ParkHub from '../pages/parkHub/index'
 import EducationHub from '../pages/educationHub/index'
 import FamilyHub from '../pages/familyHub/index'
 
-import IntelligentFamily from '../components/intelligentFamily/index'
+import IntelligentHome from '../components/intelligentHome/index'
 import IntelligentSystems from '../components/intelligentSystems/index'
 import IntelligentEntertainment from '../components/intelligentEntertainment/index'
 
@@ -25,8 +25,8 @@ const routes = [
         component: FamilyHub,
         routes: [
           {
-            path: '/family/family',
-            component: IntelligentFamily,
+            path: '/family/home',
+            component: IntelligentHome,
             routes: [],
           },
           {
