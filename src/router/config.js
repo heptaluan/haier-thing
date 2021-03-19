@@ -6,9 +6,9 @@ import ParkHub from '../pages/parkHub/index'
 import EducationHub from '../pages/educationHub/index'
 import FamilyHub from '../pages/familyHub/index'
 
-import IntelligentHome from '../components/intelligentHome/index'
-import IntelligentSystems from '../components/intelligentSystems/index'
-import IntelligentEntertainment from '../components/intelligentEntertainment/index'
+import IntelligentHome from '../components/family/intelligentHome/index'
+import IntelligentSystems from '../components/family/intelligentSystems/index'
+import IntelligentEntertainment from '../components/family/intelligentEntertainment/index'
 
 const routes = [
   {

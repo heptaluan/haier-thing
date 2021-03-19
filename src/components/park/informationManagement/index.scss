@@ -1,0 +1,24 @@
+.information-management {
+  width: 300px;
+  border: 1px solid #333;
+
+  .information-box {
+    display: flex;
+  }
+
+  .information-view {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+  }
+
+  .information-input {
+
+  }
+
+  .information-cover {
+    img {
+      width: 50px;
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import HomeTopHeader from '../../components/homeTopHeader/index'
+import HomeTopHeader from '../../components/home/homeTopHeader/index'
 import './index.scss'
 
-function Home() {
+const Home = () => {
   return (
     <div className="home">
       <HomeTopHeader></HomeTopHeader>

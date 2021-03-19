@@ -1,0 +1,16 @@
+.security-system {
+  display: flex;
+
+  .control-box {
+    border: 1px solid #333;
+    padding: 20px;
+
+    .img-box {
+      width: 30px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

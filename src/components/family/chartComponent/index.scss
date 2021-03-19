@@ -1,0 +1,18 @@
+.chart-component {
+  width: 270px;
+  display: flex;
+  border: 1px solid #333;
+  margin-top: 40px;
+
+  .box {
+    margin: 0 20px;
+
+    img {
+      width: 50px;
+    }
+  }
+}
+
+.chart-box {
+  height: 500px;
+}

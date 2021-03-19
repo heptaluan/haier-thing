@@ -1,0 +1,16 @@
+.intelligent-home {
+
+  .control-component-box {
+    display: flex;
+  }
+
+  .voice-component-box {
+    width: 100px;
+    border: 1px solid #333;
+    margin-top: 40px;
+
+    img {
+      width: 50px;
+    }
+  }
+}
