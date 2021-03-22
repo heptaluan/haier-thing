@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './index.scss'
+import { Button } from 'antd'
 
 const ControlComponent = (props) => {
   const [curData, setCurData] = useState(props.data)
@@ -14,12 +15,11 @@ const ControlComponent = (props) => {
       <h4 className="title">{curData.title}</h4>
       <div className="img-box">
         {
-          curData.state ? <img src={curData.onImg} alt="cover"/>
-            : <img src={curData.offImg} alt="cover"/>
+          curData.state ? curData.on : curData.off
         }
       </div>
-      <button onClick={() => handleButtonClick(true)}>开启灯光</button>
-      <button onClick={() => handleButtonClick(false)}>关闭灯光</button>
+      <Button onClick={() => handleButtonClick(true)}>{curData.onText}</Button>
+      <Button onClick={() => handleButtonClick(false)}>{curData.offText}</Button>
     </div>
   )
 }

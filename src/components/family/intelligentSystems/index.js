@@ -8,7 +8,6 @@ import SecuritySystem from '../../common/securitySystem/index'
 import on from '../../../assets/images/on.png'
 
 const IntelligentSystems = () => {
-
   const controlList = [
     { id: '0', title: '人体感应', type: 'switch', cover: on },
     { id: '1', title: '红外警戒', type: 'switch', cover: on },
@@ -21,13 +20,15 @@ const IntelligentSystems = () => {
   }
 
   return (
-    <div className="intelligent-systems">
-      <AccessControl />
-      <CameraComponent />
-      <SecuritySystem
-        list={controlList}
-        handleSwitchChange={handleSwitchChange}
-      />
+    <div className="intelligent-systems-wrap">
+      <div className="intelligent-systems">
+        <AccessControl />
+        <CameraComponent />
+        <SecuritySystem
+          list={controlList}
+          handleSwitchChange={handleSwitchChange}
+        />
+      </div>
     </div>
   )
 }

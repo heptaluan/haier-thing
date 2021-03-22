@@ -3,7 +3,7 @@ import { Modal, Button } from 'antd'
 import './index.scss'
 import { Recharts, Components } from 'react-component-echarts'
 import 'echarts'
-import on from '../../../assets/images/on.png'
+import IconFont from '../../common/IconFont/index'
 
 const {
   SplitLine,
@@ -35,21 +35,21 @@ const ChartComponent = props => {
       <div className="box">
         <h4 className="title">温度计</h4>
         <div className="img-box">
-          <img src={on} alt="cover"/>        
+          <IconFont style={{ fontSize: '80px' }} type="icon-thermometer" />   
         </div>
         <p>温度：{props.data.temperature}</p>
         <p>湿度：{props.data.humidity}</p>
-        <Button type="primary" onClick={showModal}>
+        <Button onClick={showModal}>
           图表展示
         </Button>
       </div>
       <div className="box">
         <h4 className="title">光照强度</h4>
         <div className="img-box">
-          <img src={on} alt="cover"/>        
+          <IconFont style={{ fontSize: '80px' }} type="icon-icon-test" />
         </div>
         <p>光照：{props.data.illumination}</p>
-        <Button type="primary" onClick={showModal}>
+        <Button onClick={showModal}>
           图表展示
         </Button>
       </div>

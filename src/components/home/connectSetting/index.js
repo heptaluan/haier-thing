@@ -54,7 +54,6 @@ const ConnectSetting = () => {
   return (
     <>
       <Button
-        type="primary"
         onClick={() => {
           setVisible(true)
         }}

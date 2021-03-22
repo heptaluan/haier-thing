@@ -1,16 +1,42 @@
-.intelligent-home {
+.intelligent-home-wrap {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 200px;
+  top: 0;
+  display: flex;
+  align-items: center;
 
-  .control-component-box {
+  .intelligent-home {
+    width: 1000px;
+    height: 600px;
+    margin: 0 auto;
     display: flex;
-  }
+    flex-wrap: wrap;
 
-  .voice-component-box {
-    width: 100px;
-    border: 1px solid #333;
-    margin-top: 40px;
+    .control-component-box {
+      width: 800px;
+      height: 220px;
+      background: #fff;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
 
-    img {
-      width: 50px;
+    .voice-component-box {
+      width: 160px;
+      height: 220px;
+      background: #fff;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+      margin-left: 20px;
     }
   }
+
 }

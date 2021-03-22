@@ -1,26 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import HomeTopHeader from '../../components/home/homeTopHeader/index'
 import './index.scss'
+import IconFont from '../../components/common/IconFont/index'
+import HomeTopHeader from '../../components/home/homeTopHeader/index'
 
 const Home = () => {
   return (
-    <div className="home">
+    <div className="home-box">
       <HomeTopHeader></HomeTopHeader>
-      <ul>
-        <li>
-          <Link to="/family">智慧家庭</Link>
-        </li>
-        <li>
-          <Link to="/park">智慧园区</Link>
-        </li>
-        <li>
-          <Link to="/hotel">智慧酒店</Link>
-        </li>
-        <li>
-          <Link to="/education">智慧教育</Link>
-        </li>
-      </ul>
+      <nav>
+        <Link to="/family">
+          <IconFont style={{ fontSize: '80px' }} type="icon-jiaoyu" />
+          <div className="title">智慧家庭</div>
+        </Link>
+        <Link to="/park">
+          <IconFont style={{ fontSize: '80px' }} type="icon-jiudian" />
+          <div className="title">智慧园区</div>
+        </Link>
+        <Link to="/hotel">
+          <IconFont style={{ fontSize: '80px' }} type="icon-jiaju" />
+          <div className="title">智慧酒店</div>
+        </Link>
+        <Link to="/education">
+          <IconFont style={{ fontSize: '80px' }} type="icon-yuanqu" />
+          <div className="title">智慧教育</div>
+        </Link>
+      </nav>
     </div>
   )
 }

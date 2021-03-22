@@ -6,10 +6,11 @@ import MonitorSetting from '../monitorSetting/index'
 const HomeTopHeader = () => {
   return (
     <div className="home-top-header">
-      <div>
-        <MonitorSetting></MonitorSetting>
+      <div className="logo">
+        海尔智能家居
       </div>
-      <div>
+      <div className="btn-groups">
+        <MonitorSetting></MonitorSetting>
         <ConnectSetting></ConnectSetting>
       </div>
     </div>

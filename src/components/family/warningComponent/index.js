@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import './index.scss'
 import { Switch } from 'antd'
+import IconFont from '../../common/IconFont/index'
 
-import on from '../../../assets/images/on.png'
-import off from '../../../assets/images/off.png'
-
-const WarningComponent = (props) => {
-
+const WarningComponent = () => {
   const [warn, setWarn] = useState(false)
 
   const onChange = checked => {
@@ -22,7 +19,7 @@ const WarningComponent = (props) => {
       <div className="box">
         <h4 className="title">燃气检测</h4>
         <div className="img-box">
-          <img src={on} alt="cover" />
+          <IconFont style={{ fontSize: '100px' }} type="icon-ranqi" />
         </div>
         <p>123</p>
         <Switch defaultChecked={false} onChange={onChange} />
@@ -30,12 +27,13 @@ const WarningComponent = (props) => {
       <div className="box">
         <h4 className="title">紧急报警</h4>
         <div className="img-box" onClick={() => handleChangeWarnState()}>
-          {
-            warn ? <img src={on} alt="cover" />
-              : <img src={off} alt="cover" />
-          }
+          {warn ? (
+            <IconFont style={{ fontSize: '100px' }} type="icon-jingbaobaojing1" />
+          ) : (
+            <IconFont style={{ fontSize: '100px' }} type="icon-jingbaobaojing" />
+          )}
         </div>
-        <p>{ warn ? '警告' : '正常'}</p>
+        <p>{warn ? '警告' : '正常'}</p>
       </div>
     </div>
   )

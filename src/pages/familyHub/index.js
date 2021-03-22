@@ -1,8 +1,8 @@
 import React, { memo, useEffect } from 'react'
 import { renderRoutes } from 'react-router-config'
-import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 import './index.scss'
+import FamilyMenu from '../../components/family/familyMenu/index'
 
 export default memo(
   withRouter(function Index(props) {
@@ -13,13 +13,11 @@ export default memo(
       }
     }, [props.history, props.location.pathname])
     return (
-      <div className="family">
-        <div className="family-links">
-          <Link to="/family/home">智能家居</Link>
-          <Link to="/family/systems">智能安防</Link>
-          <Link to="/family/entertainment">智能娱乐</Link>
+      <div className="family-hub">
+        <div className="family-content">
+          <FamilyMenu />
+          {renderRoutes(props.route.routes)}
         </div>
-        <div className="family-content">{renderRoutes(props.route.routes)}</div>
       </div>
     )
   })
