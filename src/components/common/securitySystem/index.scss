@@ -1,16 +1,26 @@
 .security-system {
+  @extend .box-basic;
+  width: 100%;
+  height: 220px;
+  margin-top: 20px;
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 
   .control-box {
-    border: 1px solid #333;
-    padding: 20px;
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
 
-    .img-box {
-      width: 30px;
+    h4 {
+      color: $theme-color;
+    }
 
-      img {
-        max-width: 100%;
-      }
+    p {
+      color: $theme-color;
     }
   }
 }

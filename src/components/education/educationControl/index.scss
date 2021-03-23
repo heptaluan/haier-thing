@@ -1,20 +1,26 @@
 .education-control {
-  width: 600px;
+  width: 480px;
 
   .view-box {
+    @extend .box-basic;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #333;
-
-    img {
-      width: 30px;
-    }
+    padding: 20px;
+    margin-bottom: 20px;
 
     li {
-      list-style: none;
       display: flex;
+      align-items: center;
+      margin: 7px 0;
+      color: $theme-color;
+
+      .anticon {
+        margin-right: 15px;
+      }
+
+      .edit-content {
+        margin-left: 15px;
+      }
     }
 
     .edit {
@@ -27,19 +33,48 @@
     display: flex;
   }
 
-  .music-box {
-    border: 1px solid #333;
-    height: 200px;
+  .view-music-box {
+    @extend .box-basic;
+    width: 228px;
+    height: 204px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-right: 20px;
   }
 
   .temperature-box {
-    border: 1px solid #333;
-    height: 200px;
+    @extend .box-basic;
+    width: 228px;
+    height: 204px;
     display: flex;
-    
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 20px;
+    color: #fff;
 
-    img {
-      width: 20px;
+    .temperature-view {
+      width: 100px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+
+      .temperature-view-item {
+        display: flex;
+        align-items: center;
+      }
     }
+
+    .illumination-view {
+      width: 100px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
   }
 }

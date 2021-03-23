@@ -10,19 +10,19 @@ const Home = () => {
       <HomeTopHeader></HomeTopHeader>
       <nav>
         <Link to="/family">
-          <IconFont style={{ fontSize: '80px' }} type="icon-jiaoyu" />
+          <IconFont style={{ fontSize: '80px' }} type="icon-jiaju" />
           <div className="title">智慧家庭</div>
         </Link>
         <Link to="/park">
-          <IconFont style={{ fontSize: '80px' }} type="icon-jiudian" />
+          <IconFont style={{ fontSize: '80px' }} type="icon-yuanqu" />
           <div className="title">智慧园区</div>
         </Link>
         <Link to="/hotel">
-          <IconFont style={{ fontSize: '80px' }} type="icon-jiaju" />
+          <IconFont style={{ fontSize: '80px' }} type="icon-jiudian" />
           <div className="title">智慧酒店</div>
         </Link>
         <Link to="/education">
-          <IconFont style={{ fontSize: '80px' }} type="icon-yuanqu" />
+          <IconFont style={{ fontSize: '80px' }} type="icon-jiaoyu" />
           <div className="title">智慧教育</div>
         </Link>
       </nav>

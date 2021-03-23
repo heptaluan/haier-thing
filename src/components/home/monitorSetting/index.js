@@ -68,6 +68,7 @@ const MonitorSetting = () => {
   return (
     <>
       <Button
+        type="text"
         onClick={() => {
           setVisible(true)
         }}

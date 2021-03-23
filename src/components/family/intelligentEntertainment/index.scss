@@ -1,11 +1,18 @@
-.music-box {
-  li {
-    list-style: none;
-    width: 200px;
-    height: 50px;
-    line-height: 50px;
-    cursor: pointer;
-    margin: 20px;
+.family-music-box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 200px;
+  top: 0;
+  display: flex;
+  align-items: center;
+
+  ul {
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
     border: 1px solid #333;
   }
+
+  
 }

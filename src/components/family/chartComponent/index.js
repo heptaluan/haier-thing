@@ -39,7 +39,7 @@ const ChartComponent = props => {
         </div>
         <p>温度：{props.data.temperature}</p>
         <p>湿度：{props.data.humidity}</p>
-        <Button onClick={showModal}>
+        <Button onClick={showModal} type="text">
           图表展示
         </Button>
       </div>
@@ -49,7 +49,7 @@ const ChartComponent = props => {
           <IconFont style={{ fontSize: '80px' }} type="icon-icon-test" />
         </div>
         <p>光照：{props.data.illumination}</p>
-        <Button onClick={showModal}>
+        <Button onClick={showModal} type="text">
           图表展示
         </Button>
       </div>

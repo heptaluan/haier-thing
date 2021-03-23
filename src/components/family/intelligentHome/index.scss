@@ -14,28 +14,40 @@
     display: flex;
     flex-wrap: wrap;
 
+    .chart-component-box {
+      height: 260px;
+    }
+
+    .warning-component-box {
+      height: 260px;
+    }
+
     .control-component-box {
+      @extend .box-basic;
       width: 800px;
-      height: 220px;
-      background: #fff;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
+      height: 260px;
       display: flex;
       align-items: center;
       justify-content: space-evenly;
     }
 
     .voice-component-box {
+      @extend .box-basic;
       width: 160px;
-      height: 220px;
-      background: #fff;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
+      height: 260px;
       display: flex;
       align-items: center;
       justify-content: space-evenly;
       flex-direction: column;
       margin-left: 20px;
+
+      h4 {
+        color: $theme-color;
+      }
+  
+      p {
+        color: $theme-color;
+      }
     }
   }
 

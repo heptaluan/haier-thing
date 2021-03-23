@@ -3,7 +3,7 @@ import './index.scss'
 
 const IntelligentEntertainment = () => {
   return (
-    <div className="music-box">
+    <div className="family-music-box">
       <ul>
         <li>播放</li>
         <li>暂停</li>

@@ -1,0 +1,19 @@
+.education-hub-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .education-hub {
+    width: 1000px;
+    height: 500px;
+    display: flex;
+
+    .camera-component {
+      width: 500px;
+      height: 450px;
+      margin-right: 20px;
+    }
+  }
+}

@@ -17,12 +17,10 @@
     flex-wrap: wrap;
 
     a {
+      @extend .box-basic;
       width: 350px;
       height: 200px;
-      border: $border;
-      border-radius: $border-radius;
-      background: #fff;
-      box-shadow: $box-shadow;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-evenly;

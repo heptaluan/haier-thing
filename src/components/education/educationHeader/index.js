@@ -1,17 +1,22 @@
 import React from 'react'
 import './index.scss'
-
-import on from '../../../assets/images/on.png'
+import { Link } from 'react-router-dom'
+import IconFont from '../../common/IconFont/index'
+import ClockComponent from '../../common/clockComponent/index'
 
 const EducationHeader = () => {
   return (
     <div className="education-header">
-      <span>Haier 智慧教育</span>
-      <span>
-        <img src={on} alt="class-img" /> 几棵（三班）
+      <span className="education-title">
+        <Link to="/">Haier 智慧教育</Link>
       </span>
-      <span>
-        <img src={on} alt="class-img" /> 10:30
+      <span className="education-class">
+        <IconFont style={{ fontSize: '26px' }} type="icon-yonghuxinxi" />{' '}
+        计科（三班）
+      </span>
+      <span className="education-clock">
+        <IconFont style={{ fontSize: '26px' }} type="icon-shizhong" /> 
+        <ClockComponent />
       </span>
     </div>
   )

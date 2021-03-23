@@ -18,8 +18,8 @@ const ControlComponent = (props) => {
           curData.state ? curData.on : curData.off
         }
       </div>
-      <Button onClick={() => handleButtonClick(true)}>{curData.onText}</Button>
-      <Button onClick={() => handleButtonClick(false)}>{curData.offText}</Button>
+      <Button type="text" onClick={() => handleButtonClick(true)}>{curData.onText}</Button>
+      <Button type="text" onClick={() => handleButtonClick(false)}>{curData.offText}</Button>
     </div>
   )
 }

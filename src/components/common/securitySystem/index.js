@@ -14,9 +14,9 @@ const SecuritySystem = (props) => {
         props.list.map(item => (
           <div className={`control-box ${props.type === 'warn' ? 'img-box' : null}`} key={item.id}>
             <h4>{item.title}</h4>
-            <div className="img-box">
-              <img src={item.cover} alt="control-cover" />
-            </div>
+            <>
+              {item.cover}
+            </>
             {
               item.type === 'switch'
                 ? <Switch defaultChecked={false} onChange={e => onChange(e, item.id)} />

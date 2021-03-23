@@ -6,38 +6,39 @@ import './index.scss'
 
 const FamilyMenu = () => {
   return (
-    <>
+    <div className="family-menu">
       <Menu
         style={{ width: 200, paddingTop: 50 }}
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={['2']}
         mode="inline"
         theme="light"
       >
         <Menu.Item
           key="1"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaoyu" />}
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
+        >
+          <Link to="/">首页</Link>
+        </Menu.Item>
+        <Menu.Item
+          key="2"
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
         >
           <Link to="/family/home">智能家居</Link>
         </Menu.Item>
         <Menu.Item
-          key="2"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaoyu" />}
+          key="3"
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-yuanqu" />}
         >
           <Link to="/family/systems">智能安防</Link>
         </Menu.Item>
         <Menu.Item
-          key="3"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaoyu" />}
-        >
-          <Link to="/family/entertainment">智能安防</Link>
-        </Menu.Item>
-        <Menu.Item
           key="4"
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
         >
-          <Link to="/">回首页测试</Link>
+          <Link to="/family/entertainment">智能娱乐</Link>
         </Menu.Item>
       </Menu>
-    </>
+    </div>
   )
 }
 

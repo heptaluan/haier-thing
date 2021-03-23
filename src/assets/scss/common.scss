@@ -2,7 +2,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-image: radial-gradient(#fff, rgb(199, 199, 199));
+  background-image: radial-gradient(rgb(0, 106, 188), rgb(0, 23, 71));
 }
 
 #root, .App, .content {
@@ -19,9 +19,24 @@ html, body {
 // 全局变量
 $body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Segoe UI", "Helvetica Neue", Helvetica, Arial, Monaco, Menlo, Consolas, sans-serif;
 
-$theme-color: #f0f0f0;
+
+$theme-color: #fff;
+$theme-opacity-color: rgba(255, 255, 255, 0.1);
 $border-radius: 10px;
-$border: 1px solid $theme-color;
+$border: 1px solid rgba(255, 255, 255, 0.1);;
 $box-shadow: 0 2px 3px 1px rgba(0, 0, 0, .1);
 $font-size: 14px;
+
+// 基础变量
+.box-basic {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: $border-radius;
+  border: 1px solid $theme-opacity-color;
+  box-shadow: $box-shadow;
+}
+
+.button-basic {
+  font-size: 16px;
+  color: #fff;
+}
 
