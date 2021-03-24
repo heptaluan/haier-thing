@@ -4,8 +4,20 @@ import ChartComponent from '../chartComponent/index'
 import WarningComponent from '../warningComponent/index'
 import IconFont from '../../common/IconFont/index'
 import './index.scss'
+// import useMqtt from '../../../hook/useMqtt'
+// import mqtt from 'mqtt'
 
 const IntelligentHome = () => {
+  // const client = mqtt.connect('192.168.1.198:1883')
+
+  // client.on('connect', function () {
+  //   client.subscribe('cowsay', function (err) {
+  //     if (!err) {
+  //       client.publish('cowsay', 'Hello mqtt')
+  //     }
+  //   })
+  // })
+
   // 控制组件
   const controlStatus = [
     {
@@ -15,16 +27,21 @@ const IntelligentHome = () => {
       on: <IconFont style={{ fontSize: '60px' }} type="icon-dengpao" />,
       off: <IconFont style={{ fontSize: '60px' }} type="icon-dengpao1" />,
       onText: '开启灯光',
-      offText: '关闭灯光'
+      offText: '关闭灯光',
     },
     {
       id: 2,
       title: '智能开关',
       state: true,
       on: <IconFont style={{ fontSize: '60px' }} type="icon-chazuo-" />,
-      off: <IconFont style={{ fontSize: '60px' }} type="icon-hekriconshebeichazuoxianxing" />,
+      off: (
+        <IconFont
+          style={{ fontSize: '60px' }}
+          type="icon-hekriconshebeichazuoxianxing"
+        />
+      ),
       onText: '开关通电',
-      offText: '开光断电'
+      offText: '开光断电',
     },
     {
       id: 3,
@@ -33,7 +50,7 @@ const IntelligentHome = () => {
       on: <IconFont style={{ fontSize: '60px' }} type="icon-kongtiao1" />,
       off: <IconFont style={{ fontSize: '60px' }} type="icon-kongtiao" />,
       onText: '开启空调',
-      offText: '关闭空调'
+      offText: '关闭空调',
     },
     {
       id: 4,
@@ -42,7 +59,7 @@ const IntelligentHome = () => {
       on: <IconFont style={{ fontSize: '60px' }} type="icon-chuanglian" />,
       off: <IconFont style={{ fontSize: '60px' }} type="icon-icon-test1" />,
       onText: '开启窗帘',
-      offText: '关闭窗帘'
+      offText: '关闭窗帘',
     },
   ]
   const [states, setState] = useState(controlStatus)
