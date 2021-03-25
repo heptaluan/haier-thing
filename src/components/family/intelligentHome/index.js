@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import ControlComponent from '../controlComponent/index'
 import ChartComponent from '../chartComponent/index'
 import WarningComponent from '../warningComponent/index'
 import IconFont from '../../common/IconFont/index'
 import './index.scss'
-// import useMqtt from '../../../hook/useMqtt'
-// import mqtt from 'mqtt'
+import useMqtt from '../../../hook/useMqtt'
+import useFetch from '../../../hook/useFetch'
+import { getDevicesList } from '../../../api/api'
 
 const IntelligentHome = () => {
-  // const client = mqtt.connect('192.168.1.198:1883')
+  const params = useMemo(() => ({
+    method: 'POST',
+    body: JSON.stringify({
+      sceneId: 1,
+      groupId: null,
+      page: 1,
+      size: 20,
+    }),
+  }), [])
 
-  // client.on('connect', function () {
-  //   client.subscribe('cowsay', function (err) {
-  //     if (!err) {
-  //       client.publish('cowsay', 'Hello mqtt')
-  //     }
-  //   })
-  // })
+  const { data } = useFetch(getDevicesList(), params)
+  console.log(data)
 
   // 控制组件
   const controlStatus = [
@@ -71,9 +75,9 @@ const IntelligentHome = () => {
 
   // 温度计 && 光照
   const temperatureStatus = {
-    temperature: 123,
-    humidity: 456,
-    illumination: 789,
+    temperature: '---',
+    humidity: '---',
+    illumination: '---',
     chartData: {
       xAxis: ['一', '二', '三', '四', '五', '六', '七', '八', '九'],
       temperature: [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
