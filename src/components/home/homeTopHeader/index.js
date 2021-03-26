@@ -7,7 +7,7 @@ const HomeTopHeader = () => {
   return (
     <div className="home-top-header">
       <div className="logo">
-        海尔智能家居
+        海尔智能
       </div>
       <div className="btn-groups">
         <MonitorSetting></MonitorSetting>

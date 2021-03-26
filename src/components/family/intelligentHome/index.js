@@ -1,26 +1,68 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import ControlComponent from '../controlComponent/index'
 import ChartComponent from '../chartComponent/index'
 import WarningComponent from '../warningComponent/index'
 import IconFont from '../../common/IconFont/index'
 import './index.scss'
 import useMqtt from '../../../hook/useMqtt'
-import useFetch from '../../../hook/useFetch'
-import { getDevicesList } from '../../../api/api'
+import axios from 'axios'
+import { getDevicesListUrl, getLatestDataUrl } from '../../../api/api'
+import { findRecordsValue, formatLatestValue} from '../../../util/index'
 
 const IntelligentHome = () => {
-  const params = useMemo(() => ({
-    method: 'POST',
-    body: JSON.stringify({
+  const [data, setData] = useState({})
+  
+
+  const getDevicesList = () => {
+    return axios.post(getDevicesListUrl(), {
       sceneId: 1,
       groupId: null,
       page: 1,
       size: 20,
-    }),
-  }), [])
+    })
+  }
 
-  const { data } = useFetch(getDevicesList(), params)
-  console.log(data)
+  const getLatestData = () => {
+    return axios.post(getLatestDataUrl(), {
+      deviceId: [1, 2],
+      start: '2021-03-20 08:04:31',
+      end: '2021-03-23 08:04:31',
+    })
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.all([getDevicesList(), getLatestData()])
+      setData(result)
+    }
+    fetchData()
+  }, [])
+
+  // 温度计 && 光照
+  const tempStatus = {
+    temperature: '---',
+    humidity: '---',
+    illumination: '---',
+    chartData: {
+      xAxis: [],
+      temperature: [],
+      humidity: [],
+      illumination: [],
+    },
+  }
+
+  if (data[0] && data[0].data.result) {
+    const records = data[0].data.result.records
+    tempStatus.temperature = findRecordsValue(records, 4)
+    tempStatus.humidity = findRecordsValue(records, 5)
+    tempStatus.illumination = findRecordsValue(records, 3)
+  }
+
+  if (data[1]) {
+    tempStatus.chartData = formatLatestValue(data[1].data.result || [])
+  }
+
+  // console.log(tempStatus)
 
   // 控制组件
   const controlStatus = [
@@ -73,24 +115,11 @@ const IntelligentHome = () => {
     setState(states.map(el => (el.id === id ? updateState : el)))
   }
 
-  // 温度计 && 光照
-  const temperatureStatus = {
-    temperature: '---',
-    humidity: '---',
-    illumination: '---',
-    chartData: {
-      xAxis: ['一', '二', '三', '四', '五', '六', '七', '八', '九'],
-      temperature: [1, 3, 9, 27, 81, 247, 741, 2223, 6669],
-      humidity: [1, 2, 4, 8, 16, 32, 64, 128, 256],
-      illumination: [1, 24, 24, 28, 162, 322, 642, 2, 15],
-    },
-  }
-
   return (
     <div className="intelligent-home-wrap">
       <div className="intelligent-home">
         <div className="chart-component-box">
-          <ChartComponent data={temperatureStatus} />
+          <ChartComponent data={tempStatus} />
         </div>
         <div className="warning-component-box">
           <WarningComponent />

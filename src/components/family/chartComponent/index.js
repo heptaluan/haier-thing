@@ -18,6 +18,8 @@ const {
 const ChartComponent = props => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
+  
+
   const showModal = () => {
     setIsModalVisible(true)
   }

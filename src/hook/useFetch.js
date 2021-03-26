@@ -13,8 +13,8 @@ const useFetch = (url = '', options = null) => {
     fetch(url, options)
       .then(res => res.json())
       .then(data => {
-        if (isMounted) {
-          setData(data)
+        if (isMounted && data.code === '10000') {
+          setData(data.result)
           setError(null)
         }
       })

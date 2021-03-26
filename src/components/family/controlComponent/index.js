@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './index.scss'
 import { Button } from 'antd'
+import IconFont from '../../common/IconFont/index'
 
 const ControlComponent = (props) => {
   const [curData, setCurData] = useState(props.data)
