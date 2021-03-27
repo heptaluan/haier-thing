@@ -116,39 +116,33 @@ const IntelligentHome = () => {
   }
 
   return (
-    <div className="family-menu">
-      <Menu
-        style={{ width: 200, paddingTop: 50 }}
-        mode="inline"
-        theme="light"
-        defaultSelectedKeys={['/family/home']}
-        selectedKeys={[history.location.pathname]}
-      >
-        <Menu.Item
-          key="/"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
-        >
-          <Link to="/">首页</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="/family/home"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
-        >
-          <Link to="/family/home">智能家居</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="/family/systems"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-yuanqu" />}
-        >
-          <Link to="/family/systems">智能安防</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="/family/entertainment"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
-        >
-          <Link to="/family/entertainment">智能娱乐</Link>
-        </Menu.Item>
-      </Menu>
+    <div className="intelligent-home-wrap">
+      <div className="intelligent-home">
+        <div className="chart-component-box">
+          <ChartComponent data={tempStatus} />
+        </div>
+        <div className="warning-component-box">
+          <WarningComponent />
+        </div>
+        <div className="voice-component-box">
+          <h4>语音控制</h4>
+          <p>----</p>
+          <IconFont
+            style={{ fontSize: '100px' }}
+            type="icon-lvsefenkaicankaoxianban-"
+          />
+        </div>
+        <div className="control-component-box">
+          {states.map(item => (
+            <ControlComponent
+              key={item.id}
+              id={item.id}
+              data={item}
+              updateState={updateCurState}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

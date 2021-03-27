@@ -1,6 +1,6 @@
 .warning-component {
   @extend .box-basic;
-  width: 300px;
+  width: 360px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -8,20 +8,12 @@
 
   .box {
     width: 100%;
-    height: 220px;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
 
-    h4 {
-      color: $theme-color;
-    }
-
-    p {
-      color: $theme-color;
-    }
-  
     button {
       @extend .button-basic;
     }
