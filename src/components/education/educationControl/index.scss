@@ -1,46 +1,36 @@
 .education-control {
   width: 480px;
 
+  li {
+    display: flex;
+    align-items: center;
+    margin: 7px 0;
+    color: $theme-color;
+
+    .anticon {
+      margin-right: 15px;
+    }
+
+    .edit-content {
+      margin-left: 15px;
+    }
+  }
+
+  .edit {
+    cursor: pointer;
+    margin-left: auto;
+  }
+
   .view-box {
     @extend .box-basic;
     display: flex;
     flex-direction: column;
     padding: 20px;
     margin-bottom: 20px;
-
-    li {
-      display: flex;
-      align-items: center;
-      margin: 7px 0;
-      color: $theme-color;
-
-      .anticon {
-        margin-right: 15px;
-      }
-
-      .edit-content {
-        margin-left: 15px;
-      }
-    }
-
-    .edit {
-      cursor: pointer;
-      margin-left: auto;
-    }
   }
 
   .bottom-box {
     display: flex;
-  }
-
-  .view-music-box {
-    @extend .box-basic;
-    width: 228px;
-    height: 204px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    margin-right: 20px;
   }
 
   .temperature-box {
@@ -52,29 +42,28 @@
     justify-content: space-evenly;
     padding: 20px;
     color: #fff;
+  }
 
-    .temperature-view {
-      width: 100px;
-      height: 100%;
+  .temperature-view {
+    width: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .temperature-view-item {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: space-evenly;
-
-      .temperature-view-item {
-        display: flex;
-        align-items: center;
-      }
     }
+  }
 
-    .illumination-view {
-      width: 100px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-evenly;
-    }
-
+  .illumination-view {
+    width: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
   }
 }

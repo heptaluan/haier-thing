@@ -25,51 +25,6 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           })
       }}
     >
-      <Form form={form} name="basic" initialValues={{ remember: true }}>
-        <Form.Item
-          label="课程名称"
-          name="class"
-          rules={[{ required: true, message: '请输入课程名称' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="课程时间"
-          name="time"
-          rules={[{ required: true, message: '请输入课程时间' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="教师姓名"
-          name="name"
-          rules={[{ required: true, message: '请输入教师姓名' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="学生人数"
-          name="num"
-          rules={[{ required: true, message: '请输入学生人数' }]}
-        >
-          <Input />
-        </Form.Item>
-      </Form>
-    </Modal>
-  )
-}
-
-const EducationControl = () => {
-
-  const [visible, setVisible] = useState(false)
-
-  const onCreate = values => {
-    console.log('Received values of form: ', values)
-    setVisible(false)
-  }
-
-  return (
-    <div className="education-control">
       <ul className="view-box">
         <li>
           <IconFont style={{ fontSize: '32px' }} type="icon-shuji" />
@@ -94,6 +49,21 @@ const EducationControl = () => {
           <span>待登录</span>
         </li>
       </ul>
+    </Modal>
+  )
+}
+
+const EducationControl = () => {
+
+  const [visible, setVisible] = useState(false)
+
+  const onCreate = values => {
+    console.log('Received values of form: ', values)
+    setVisible(false)
+  }
+
+  return (
+    <div className="education-control">
       <div className="bottom-box">
         <div className="view-music-box">
           <h4>音乐</h4>
