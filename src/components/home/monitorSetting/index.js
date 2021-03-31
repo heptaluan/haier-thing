@@ -5,25 +5,7 @@ import { Button, Modal, Form, Input } from 'antd'
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm()
   return (
-    <Modal
-      visible={visible}
-      title="监控参数设置"
-      onCancel={onCancel}
-      okText="确定"
-      cancelText="取消"
-      onOk={() => {
-        form
-          .validateFields()
-          .then(values => {
-            form.resetFields()
-            onCreate(values)
-          })
-          .catch(info => {
-            console.log('Validate Failed:', info)
-          })
-      }}
-    >
-      <Form form={form} name="basic" initialValues={{ remember: true }}>
+    <Form form={form} name="basic" initialValues={{ remember: true }}>
         <Form.Item
           label="监控地址"
           name="address"
@@ -53,7 +35,6 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           <Input />
         </Form.Item>
       </Form>
-    </Modal>
   )
 }
 
