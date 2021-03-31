@@ -1,67 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './index.scss'
-import { Modal, Form, Input } from 'antd'
-
 import IconFont from '../../common/IconFont/index'
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
-  const [form] = Form.useForm()
-  return (
-    <Modal
-      visible={visible}
-      title="信息录入"
-      onCancel={onCancel}
-      okText="确定"
-      cancelText="取消"
-      onOk={() => {
-        form
-          .validateFields()
-          .then(values => {
-            form.resetFields()
-            onCreate(values)
-          })
-          .catch(info => {
-            console.log('Validate Failed:', info)
-          })
-      }}
-    >
-      <ul className="view-box">
-        <li>
-          <IconFont style={{ fontSize: '32px' }} type="icon-shuji" />
-          <span>待登录</span>
-        </li>
-        <li>
-          <IconFont style={{ fontSize: '32px' }} type="icon-shizhong" />
-          <span>待登录</span>
-        </li>
-        <li>
-          <IconFont style={{ fontSize: '32px' }} type="icon-yonghuxinxi" />
-          <span>待登录</span>
-          <span className="edit-content">-- -- -- --</span>
-          <span className="edit" onClick={() => setVisible(true)}>
-            <IconFont style={{ fontSize: '22px' }} type="icon-bianji" />
-          </span>
-        </li>
-        <li>
-          <span className="img-box">
-            <IconFont style={{ fontSize: '32px' }} type="icon-yonghu" />
-          </span>
-          <span>待登录</span>
-        </li>
-      </ul>
-    </Modal>
-  )
-}
-
 const EducationControl = () => {
-
-  const [visible, setVisible] = useState(false)
-
-  const onCreate = values => {
-    console.log('Received values of form: ', values)
-    setVisible(false)
-  }
-
   return (
     <div className="education-control">
       <div className="bottom-box">
@@ -101,13 +42,6 @@ const EducationControl = () => {
           </div>
         </div>
       </div>
-      <CollectionCreateForm
-        visible={visible}
-        onCreate={onCreate}
-        onCancel={() => {
-          setVisible(false)
-        }}
-      />
     </div>
   )
 }
