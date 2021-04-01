@@ -22,7 +22,6 @@
   }
 
   .view-box {
-    @extend .box-basic;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -34,7 +33,6 @@
   }
 
   .temperature-box {
-    @extend .box-basic;
     width: 228px;
     height: 204px;
     display: flex;
