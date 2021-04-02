@@ -1,4 +1,5 @@
 export const findRecordsValue = (arr, id) => {
+  if (arr.length === 0) return
   return JSON.parse(arr.find(el => el.id === id).latestData.value).value
 }
 

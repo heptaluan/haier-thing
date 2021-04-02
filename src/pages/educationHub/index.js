@@ -1,18 +1,20 @@
 import React from 'react'
 import './index.scss'
-import EducationHeader from '../../components/education/educationHeader/index'
-import EducationControl from '../../components/education/educationControl/index'
-import CameraComponent from '../../components/common/cameraComponent/index'
+import TopHeader from '../../components/common/topHeader/index'
+import HomeMenu from '../../components/common/homeMenu/index'
+import EducationContent from '../../components/education/educationContent/index'
 
 const EducationHub = () => {
   return (
-    <div className="education-hub-box">
-      <EducationHeader />
-      <div className="education-hub">
-        <CameraComponent />
-        <EducationControl />
+    <>
+      <TopHeader />
+      <div className="education-hub-box">
+        <HomeMenu />
+        <div className="education-hub">
+          <EducationContent />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

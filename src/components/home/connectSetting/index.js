@@ -52,34 +52,23 @@ const ConnectSetting = () => {
   }
 
   return (
-    <div className="intelligent-home-wrap">
-      <div className="intelligent-home">
-        <div className="chart-component-box">
-          <ChartComponent data={tempStatus} />
-        </div>
-        <div className="warning-component-box">
-          <WarningComponent />
-        </div>
-        <div className="voice-component-box">
-          <h4>语音控制</h4>
-          <p>----</p>
-          <IconFont
-            style={{ fontSize: '100px' }}
-            type="icon-lvsefenkaicankaoxianban-"
-          />
-        </div>
-        <div className="control-component-box">
-          {states.map(item => (
-            <ControlComponent
-              key={item.id}
-              id={item.id}
-              data={item}
-              updateState={updateCurState}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <>
+      <Button
+        type="text"
+        onClick={() => {
+          setVisible(true)
+        }}
+      >
+        连接设置
+      </Button>
+      <CollectionCreateForm
+        visible={visible}
+        onCreate={onCreate}
+        onCancel={() => {
+          setVisible(false)
+        }}
+      />
+    </>
   )
 }
 

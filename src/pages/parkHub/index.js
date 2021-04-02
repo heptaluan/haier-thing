@@ -1,22 +1,21 @@
 import React from 'react'
 import './index.scss'
+import HomeMenu from '../../components/common/homeMenu/index'
+import TopHeader from '../../components/common/topHeader/index'
+import ParkContent from '../../components/park/parkContent/index'
 
-import InformationManagement from '../../components/park/informationManagement/index'
-import InformationControl from '../../components/park/informationControl/index'
-import ParkHeader from '../../components/park/parkHeader/index'
-import CameraComponent from '../../components/common/cameraComponent/index'
-
-const parkHub = () => {
+const ParkHub = () => {
   return (
-    <div className="park-hub-box">
-      <ParkHeader />
-      <div className="park-hub">
-        <InformationManagement />
-        <CameraComponent />
-        <InformationControl />
+    <>
+      <TopHeader />
+      <div className="park-hub-box">
+        <HomeMenu />
+        <div className="park-hub">
+          <ParkContent />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
-export default parkHub
+export default ParkHub

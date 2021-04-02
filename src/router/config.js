@@ -6,10 +6,6 @@ import ParkHub from '../pages/parkHub/index'
 import EducationHub from '../pages/educationHub/index'
 import FamilyHub from '../pages/familyHub/index'
 
-import IntelligentHome from '../components/family/intelligentHome/index'
-import IntelligentSystems from '../components/family/intelligentSystems/index'
-import IntelligentEntertainment from '../components/family/intelligentEntertainment/index'
-
 const routes = [
   {
     path: '/',
@@ -23,23 +19,7 @@ const routes = [
       {
         path: '/family',
         component: FamilyHub,
-        routes: [
-          {
-            path: '/family/home',
-            component: IntelligentHome,
-            routes: [],
-          },
-          {
-            path: '/family/systems',
-            component: IntelligentSystems,
-            routes: [],
-          },
-          {
-            path: '/family/entertainment',
-            component: IntelligentEntertainment,
-            routes: [],
-          },
-        ],
+        routes: [],
       },
       {
         path: '/park',

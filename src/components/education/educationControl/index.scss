@@ -1,67 +1,31 @@
-.education-control {
-  width: 480px;
+.education-control-wrap {
+  width: 100%;
+  height: 100%;
 
-  li {
-    display: flex;
-    align-items: center;
-    margin: 7px 0;
-    color: $theme-color;
-
-    .anticon {
-      margin-right: 15px;
-    }
-
-    .edit-content {
-      margin-left: 15px;
-    }
-  }
-
-  .edit {
-    cursor: pointer;
-    margin-left: auto;
-  }
-
-  .view-box {
+  .education-control {
     display: flex;
     flex-direction: column;
     padding: 20px;
     margin-bottom: 20px;
-  }
 
-  .bottom-box {
-    display: flex;
-  }
-
-  .temperature-box {
-    width: 228px;
-    height: 204px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 20px;
-    color: #fff;
-  }
-
-  .temperature-view {
-    width: 100px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-
-    .temperature-view-item {
+    li {
       display: flex;
       align-items: center;
-    }
-  }
+      margin: 7px 0;
+      color: $theme-color;
 
-  .illumination-view {
-    width: 100px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+      .anticon {
+        margin-right: 15px;
+      }
+
+      .edit-content {
+        margin-left: 15px;
+      }
+    }
+
+    .edit {
+      cursor: pointer;
+      margin-left: auto;
+    }
   }
 }
