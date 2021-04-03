@@ -22,24 +22,6 @@ const HomeMenu = (props) => {
           <Link to="/">首页</Link>
         </Menu.Item>
         <Menu.Item
-          key="/family"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
-        >
-          <Link to="/family">智慧家庭</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="/park"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-yuanqu" />}
-        >
-          <Link to="/park">智慧园区</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="/hotel"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
-        >
-          <Link to="/hotel">智慧酒店</Link>
-        </Menu.Item>
-        <Menu.Item
           key="/education"
           icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
         >

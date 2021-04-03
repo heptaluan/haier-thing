@@ -14,13 +14,6 @@ const ParkList = props => {
           ? props.data.onIcon
           : props.data.offIcon}
       </div>
-      <div className="controls-name">
-        <span>{props.data.title}</span>
-        <span>设备id：{props.data.id}</span>
-      </div>
-      <div className="controls-on">
-        <span>{props.data.stateText}</span>
-      </div>
       <div className="controls-switch">
         <Switch defaultChecked={props.data.state} onChange={handleSwitchChange} />
       </div>

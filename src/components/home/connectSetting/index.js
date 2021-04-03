@@ -29,14 +29,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           name="address"
           rules={[{ required: true, message: '请输入数据服务地址' }]}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="数据服务端口"
-          name="port"
-          rules={[{ required: true, message: '请输入数据服务端口' }]}
-        >
-          <Input />
+          <div>
+            <Input />
+          </div>
         </Form.Item>
       </Form>
     </Modal>

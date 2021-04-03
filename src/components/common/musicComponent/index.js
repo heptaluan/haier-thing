@@ -13,18 +13,6 @@ const MusicComponent = () => {
             type="icon-bofangqishangyishou"
           />
         </Button>
-        <Button>
-          <IconFont style={{ fontSize: '24px' }} type="icon-bofangqi-bofang" />
-        </Button>
-        <Button>
-          <IconFont style={{ fontSize: '24px' }} type="icon-bofangqi-zanting" />
-        </Button>
-        <Button>
-          <IconFont
-            style={{ fontSize: '24px' }}
-            type="icon-bofangqixiayishou"
-          />
-        </Button>
       </div>
     </div>
   )
