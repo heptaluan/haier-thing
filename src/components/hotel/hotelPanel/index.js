@@ -45,6 +45,27 @@ const HotelPanel = () => {
             <Button>信息注销</Button>
           </div>
         </div>
+        <Tabs tabBarExtraContent={operations()} onTabClick={onTabClick}>
+          <TabPane tab="智慧酒店" key="1">
+            <div className="view-box-wrap">
+              <ul>
+                {states.map(item => (
+                  <li key={item.id}>
+                    <HotelList data={item} updateCurState={updateCurState} />
+                  </li>
+                ))}
+              </ul>
+              <div className="view-box">
+                <div className="view-box-first">
+                  <HotelPanel />
+                </div>
+              </div>
+            </div>
+          </TabPane>
+          <TabPane tab="历史数据" key="2">
+            <ChartViewList tempStatus={tempStatus} />
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   )

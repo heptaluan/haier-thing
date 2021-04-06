@@ -1,8 +1,7 @@
 import React from 'react'
 import './index.scss'
-import { Switch } from 'antd'
 
-const ParkList = props => {
+const ParkList = () => {
   const [form] = Form.useForm()
   return (
     <Modal

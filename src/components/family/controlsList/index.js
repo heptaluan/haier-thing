@@ -1,6 +1,5 @@
 import React from 'react'
 import './index.scss'
-import { Button, Switch } from 'antd'
 
 const ControlsList = props => {
   // switch 事件

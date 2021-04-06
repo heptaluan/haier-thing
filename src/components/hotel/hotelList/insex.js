@@ -1,6 +1,5 @@
 import React from 'react'
 import './index.scss'
-import { Button } from 'antd'
 
 const HotelList = props => {
   return (
