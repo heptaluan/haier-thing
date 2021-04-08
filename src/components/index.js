@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 
 export default memo(
   withRouter(function IndexComponent(props) {
-    // console.log(props.route, 'props.route', props.location)
     useEffect(() => {
       if (props.location.pathname === '/') {
         props.history.push('/home')

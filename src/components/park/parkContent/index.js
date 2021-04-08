@@ -107,17 +107,6 @@ const ParkContent = () => {
     setState(updateData)
   }
 
-  // switch 事件
-  const onChange = checked => {
-    props.updateCurState(props.data.id, checked)
-  }
-
-  const handleChangeWarnState = props => {
-    if (props.data.id === 4) {
-      props.updateCurState(props.data.id, !props.data.state)
-    }
-  }
-
   return (
     <div className="park-content-box">
       <Tabs tabBarExtraContent={operations()} onTabClick={onTabClick}>

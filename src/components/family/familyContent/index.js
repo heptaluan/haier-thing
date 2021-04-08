@@ -18,25 +18,6 @@ const { TabPane } = Tabs
 const FamilyContent = () => {
   const [data, setData] = useState({})
 
-  // 日期选择事件
-  const handleDateChange = (date, dateString) => {
-    console.log(date, dateString)
-  }
-
-  const [showDate, setShowDate] = useState(false)
-
-  const onTabClick = key => {
-    key === '3' ? setShowDate(true) : setShowDate(false)
-  }
-
-  const operations = () => {
-    return showDate ? (
-      <Space direction="vertical">
-        <DatePicker locale={locale} onChange={handleDateChange} />
-      </Space>
-    ) : null
-  }
-
   const getDevicesList = () => {
     return axios.post(getDevicesListUrl(), {
       sceneId: 1,

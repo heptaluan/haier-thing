@@ -3,6 +3,18 @@ import './index.scss'
 
 const ParkList = () => {
   const [form] = Form.useForm()
+
+  // switch 事件
+  const onChange = checked => {
+    props.updateCurState(props.data.id, checked)
+  }
+
+  const handleChangeWarnState = props => {
+    if (props.data.id === 4) {
+      props.updateCurState(props.data.id, !props.data.state)
+    }
+  }
+
   return (
     <Modal
       visible={visible}
@@ -10,6 +22,8 @@ const ParkList = () => {
       onCancel={onCancel}
       okText="确定"
       cancelText="取消"
+      onChange={onChange}
+      handleChangeWarnState={handleChangeWarnState}
       onOk={() => {
         form
           .validateFields()
