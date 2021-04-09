@@ -1,11 +1,18 @@
 import React from 'react'
 import './index.scss'
-import ChartComponent from '../chartComponent/index'
+import ChartLineComponent from '../chartLineComponent/index'
 
 const ChartViewList = props => {
   return (
     <div className="chart-view-list">
-      <ChartComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
+      <ChartLineComponent data={props.tempStatus} />
     </div>
   )
 }

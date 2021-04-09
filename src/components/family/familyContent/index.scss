@@ -9,10 +9,18 @@
     display: flex;
     flex-wrap: wrap;
     padding: 0 64px;
+    position: relative;
 
     .ant-tabs {
       width: 100%;
     }
+  }
+
+  .music-box {
+    position: absolute;
+    left: -120px;
+    bottom: 80px;
+    width: 400px;
   }
 
   .controls-box {

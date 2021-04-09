@@ -6,6 +6,10 @@ import ParkHub from '../pages/parkHub/index'
 import EducationHub from '../pages/educationHub/index'
 import FamilyHub from '../pages/familyHub/index'
 
+import Login from '../components/common/login/index'
+import Setting from '../components/common/setting/index'
+
+
 const routes = [
   {
     path: '/',
@@ -34,6 +38,16 @@ const routes = [
       {
         path: '/education',
         component: EducationHub,
+        routes: [],
+      },
+      {
+        path: '/login',
+        component: Login,
+        routes: [],
+      },
+      {
+        path: '/setting',
+        component: Setting,
         routes: [],
       },
     ],

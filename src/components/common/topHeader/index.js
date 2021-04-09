@@ -1,23 +1,23 @@
 import React from 'react'
 import './index.scss'
+import { Button } from 'antd'
 import { useHistory } from 'react-router-dom'
-import MusicComponent from '../musicComponent/index'
 
 const TopHeader = () => {
   const history = useHistory()
-  let pathname = null
-  switch (history.location.pathname) {
-    case '/family':
-      pathname = '智慧家庭'
-      break
-    default:
-      break
+
+  const logOut = () => {
+    localStorage.setItem('user', '')
+    history.push('/login')
   }
+
   return (
     <div className="top-header-box">
       <div className="top-header">
-        <div className="logo">{pathname}</div>
-        
+        <div className="logo">物联网场景设计与开发智能平台</div>
+        <div className="logout">
+          <Button onClick={() => { logOut() }}>登出</Button>
+        </div>
       </div>
     </div>
   )

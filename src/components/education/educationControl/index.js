@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './index.scss'
-import { Modal, Form, Input } from 'antd'
+import { Modal, Form, Input, message } from 'antd'
 import IconFont from '../../common/IconFont/index'
+import axios from 'axios'
+import { getRegisterUrl, getDeleteUrl, getUserToken } from '../../../api/api'
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
+const CollectionCreateForm = ({ visible, onCreate, onCancel, data }) => {
   const [form] = Form.useForm()
   return (
     <Modal
@@ -27,14 +29,21 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
       <Form form={form} name="basic" initialValues={{ remember: true }}>
         <Form.Item
           label="课程名称"
-          name="class"
+          name="courseName"
           rules={[{ required: true, message: '请输入课程名称' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="课程时间"
-          name="time"
+          label="开始时间"
+          name="startTime"
+          rules={[{ required: true, message: '请输入课程时间' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="结束时间"
+          name="endTime"
           rules={[{ required: true, message: '请输入课程时间' }]}
         >
           <Input />
@@ -48,7 +57,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
         </Form.Item>
         <Form.Item
           label="学生人数"
-          name="num"
+          name="studentCount"
           rules={[{ required: true, message: '请输入学生人数' }]}
         >
           <Input />
@@ -58,12 +67,40 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   )
 }
 
-const EducationControl = () => {
+const EducationControl = props => {
+  axios.defaults.headers.common['Authorization'] = getUserToken()
   const [visible, setVisible] = useState(false)
 
   const onCreate = values => {
-    console.log('Received values of form: ', values)
+    console.log(values)
+    const data = { ...values, cardId: props.data.cardId }
+    axios.post(getRegisterUrl(), {
+      type: 2,
+      value: {
+        ...data
+      },
+      cardId: props.data.cardId,
+    })
     setVisible(false)
+  }
+
+  const handleRegister = data => {
+    if (data.cardId !== '-- --') {
+      setVisible(true)
+    } else {
+      message.error(`请先进行信息登记`);
+    }
+  }
+
+  const handleDelete = data => {
+    if (data.cardId !== '-- --') {
+      axios.post(getDeleteUrl(), {
+        type: 3,
+        cardId: data.cardId,
+      })
+    } else {
+      message.error(`请先进行信息登记`);
+    }
   }
 
   return (
@@ -71,30 +108,41 @@ const EducationControl = () => {
       <ul className="education-control">
         <li>
           <IconFont style={{ fontSize: '32px' }} type="icon-shuji" />
-          <span>待登录</span>
+          <span>编号：{props.data.cardId}</span>
+        </li>
+        <li>
+          <IconFont style={{ fontSize: '32px' }} type="icon-shuji" />
+          <span>课程名：{props.data.courseName}</span>
         </li>
         <li>
           <IconFont style={{ fontSize: '32px' }} type="icon-shizhong" />
-          <span>待登录</span>
+          <span>开始时间：{props.data.startTime}</span>
+        </li>
+        <li>
+          <IconFont style={{ fontSize: '32px' }} type="icon-shizhong" />
+          <span>结束时间：{props.data.startTime}</span>
         </li>
         <li>
           <IconFont style={{ fontSize: '32px' }} type="icon-yonghuxinxi" />
-          <span>待登录</span>
-          <span className="edit-content">-- -- -- --</span>
-          <span className="edit" onClick={() => setVisible(true)}>
-            <IconFont style={{ fontSize: '22px' }} type="icon-bianji" />
+          <span>教师姓名：{props.data.name}</span>
+          <span className="edit" onClick={() => handleRegister(props.data)}>
+            课程录入
+          </span>
+          <span className="edit" onClick={() => handleDelete(props.data)}>
+            课程删除
           </span>
         </li>
         <li>
           <span className="img-box">
             <IconFont style={{ fontSize: '32px' }} type="icon-yonghu" />
           </span>
-          <span>待登录</span>
+          <span>学生人数：{props.data.studentCount}</span>
         </li>
       </ul>
       <CollectionCreateForm
         visible={visible}
         onCreate={onCreate}
+        data={props.data}
         onCancel={() => {
           setVisible(false)
         }}

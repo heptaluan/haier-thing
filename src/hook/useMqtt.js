@@ -24,12 +24,17 @@ function useMqtt() {
           client.publish('presence', 'Hello mqtt')
         }
       })
+      client.subscribe('card_data', function (err) {
+        if (!err) {
+          client.publish('presence', 'Hello card')
+        }
+      })
     })
 
     client.on('message', (topic, message) => {
       setData(JSON.parse(message.toString()))
     })
-    // 只需要执行一次，所以不需要添加 client 依赖
+    // 只需要执行一次，所以不需要添加依赖
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

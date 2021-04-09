@@ -1,14 +1,13 @@
 .chart-view-list {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  overflow: hidden;
 
   .chart-wrap {
-    width: 450px;
-    height: 300px;
+    width: 420px;
+    height: 280px;
     border: 1px solid #eee;
-    margin-bottom: 20px;
+    float: left;
+    margin: 15px;
   }
 }
