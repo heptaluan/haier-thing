@@ -12,6 +12,8 @@ export default memo(
         if (props.location.pathname === '/') {
           props.history.push('/home')
         }
+      } else if (isLogin && isLogin === 'sysadmin') {
+        props.history.push('/setting')
       } else {
         props.history.push('/login')
       }
