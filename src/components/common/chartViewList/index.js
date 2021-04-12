@@ -6,13 +6,6 @@ const ChartViewList = props => {
   return (
     <div className="chart-view-list">
       <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
-      <ChartLineComponent data={props.tempStatus} />
     </div>
   )
 }

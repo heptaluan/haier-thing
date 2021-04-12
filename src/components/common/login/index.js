@@ -1,36 +1,11 @@
 import React from 'react'
 import './index.scss'
 import { Form, Input, Button } from 'antd'
-import { getUserLoginUrl, getUserToken } from '../../../api/api'
+import { getUserToken } from '../../../api/api'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
 
 const Login = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
-  const history = useHistory()
-  const handleLogin = value => {
-    axios
-      .post(getUserLoginUrl(), {
-        ...value,
-      })
-      .then(res => {
-        if (res.data.code === '10000') {
-          localStorage.setItem(
-            'userInfo',
-            JSON.stringify({
-              user: res.data.result.user.token,
-              role: res.data.result.role,
-            })
-          )
-          if (res.data.result.role === 'sysadmin') {
-            history.push('/setting')
-          } else if (res.data.result.role === 'user') {
-            history.push('/home')
-          }
-        }
-      })
-  }
-
   return (
     <div className="login-box-wrap">
       <div className="login-box">
@@ -38,7 +13,6 @@ const Login = () => {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
-          onFinish={handleLogin}
         >
           <Form.Item
             name="identity"

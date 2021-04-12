@@ -3,35 +3,12 @@ import React from 'react'
 import { Menu } from 'antd'
 import IconFont from '../IconFont/index'
 import './index.scss'
-import { getChangeSceneUrl, getUserToken } from '../../../api/api'
+import { getUserToken } from '../../../api/api'
 import axios from 'axios'
 
 const HomeMenu = props => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
   const history = useHistory()
-
-  const handleChangeScene = () => {
-    let curKey = null
-    switch (history.location.pathname) {
-      case '/family':
-        curKey = 1
-        break
-      case '/park':
-        curKey = 4
-        break
-      case '/hotel':
-        curKey = 3
-        break
-      case '/education':
-        curKey = 2
-        break
-      default:
-        break
-    }
-    axios.post(getChangeSceneUrl(), {
-      current: curKey,
-    })
-  }
 
   return (
     <div className="home-menu">
@@ -41,7 +18,6 @@ const HomeMenu = props => {
         theme="light"
         defaultSelectedKeys={['/family']}
         selectedKeys={[history.location.pathname]}
-        onClick={handleChangeScene}
       >
         <Menu.Item
           key="/"
