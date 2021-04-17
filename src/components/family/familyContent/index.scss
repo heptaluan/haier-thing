@@ -1,0 +1,82 @@
+.family-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .family-home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 64px;
+    position: relative;
+
+    .ant-tabs {
+      width: 100%;
+    }
+  }
+
+  .music-box {
+    position: absolute;
+    left: -120px;
+    bottom: 80px;
+    width: 400px;
+  }
+
+  .controls-box {
+    display: flex;
+    justify-content: space-between;
+
+    ul {
+      width: 100%;
+      min-width: 800px;
+      margin-right: 20px;
+
+      .controls-list {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 20px 50px 20px 20px;
+        display: flex;
+        flex-flow: row wrap;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .icon-box,
+        .controls-name,
+        .controls-on,
+        .controls-off {
+          display: flex;
+          flex: 1 1 auto;
+          width: 25%;
+          max-width: 25%;
+        }
+
+        .controls-name {
+          align-self: flex-start;
+        }
+
+        .controls-on,
+        .controls-off {
+          align-items: center;
+        }
+      }
+
+      .controls-name {
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .chart-box {
+      .chart-component {
+        width: 600px;
+        height: 350px;
+        border: 1px solid #eee;
+        margin-bottom: 40px;
+      }
+    }
+  }
+}
