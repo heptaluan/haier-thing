@@ -14,21 +14,6 @@ import {
   getUserToken
 } from '../../../api/api'
 
-
-
-const formatData = data => {
-  if (data[0]) {
-    return {
-      human: findSpecifiedVal(5, data),
-      locked: findSpecifiedVal(9, data),
-      warn: findSpecifiedVal(10, data),
-      rke: findSpecifiedVal(17, data),
-      fire: findSpecifiedVal(2, data),
-      ray: findSpecifiedVal(4, data),
-    }
-  }
-}
-
 const AccessList = props => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
   const handleSwitchChange = (checked, e) => {
@@ -39,10 +24,6 @@ const AccessList = props => {
       2
     )
   }
-
-  const data = formatData(props.data)
-
-  console.log(data)
 
   const handleRegister = data => {
     console.log(data)
@@ -164,23 +145,6 @@ const AccessList = props => {
             <Switch
               id={4}
               checked={props.data.find(item => item.classId === 4).deviceState === 0 ? false : true}
-              defaultChecked={false}
-              onChange={handleSwitchChange}
-            />
-          </div>
-        </li>
-        <li>
-          <div className="icon-box">
-            <IconFont style={{ fontSize: '45px' }} type="icon-yanwujiance_1" />
-          </div>
-          <div className="controls-name">
-            <span>{data.fire.name}</span>
-            <span>设备id：{data.fire.id}</span>
-          </div>
-          <div className="controls-switch">
-            <Switch
-              id={2}
-              checked={props.data.find(item => item.classId === 2).deviceState === 0 ? false : true}
               defaultChecked={false}
               onChange={handleSwitchChange}
             />

@@ -1,4 +1,4 @@
-module.exports = {
+=o`module.exports = {
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
@@ -8,4 +8,4 @@ module.exports = {
   bracketSpacing: true,
   jsxBracketSameLine: false,
   arrowParens: "avoid"
-};
+}

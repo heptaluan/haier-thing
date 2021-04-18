@@ -10,10 +10,6 @@ const renderFirstVal = props => {
       return <span>光照：{JSON.parse(props.data.latestData.value).value}</span>
     case 15:
       return <span>温度：{JSON.parse(props.data.latestData.value).value}</span>
-    // case 3:
-      // return <span>正常</span>
-    // case 10:
-      // return <span>正常</span>
     case 8:
     case 11:
     case 19:
