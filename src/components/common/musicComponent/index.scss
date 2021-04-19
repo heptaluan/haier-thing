@@ -1,0 +1,30 @@
+.music-box {
+  position: absolute;
+  left: -186px;
+  bottom: 100px;
+  width: 170px;
+  height: 85px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+
+  .music-btn-wrap-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .music-btn-wrap-bottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+
+.music-btn-box {
+  cursor: pointer;
+}

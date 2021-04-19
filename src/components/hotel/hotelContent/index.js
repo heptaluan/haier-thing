@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './index.scss'
 import IconFont from '../../common/IconFont/index'
-import { DatePicker, Space, Tabs } from 'antd'
+import { DatePicker, Space, Tabs, message } from 'antd'
 import HotelPanel from '../hotelPanel/index'
-import ChartViewList from '../../common/chartViewList/index'
 import 'moment/locale/zh-cn'
 import locale from 'antd/es/date-picker/locale/zh_CN'
 import HotelList from '../hotelList/insex'
@@ -15,15 +14,15 @@ import {
 } from '../../../api/api'
 import axios from 'axios'
 import { UserContext } from '../../../router/index'
+import { useHistory } from 'react-router-dom'
 
 const { TabPane } = Tabs
 
 const HotelContent = () => {
+  const history = useHistory()
   axios.defaults.headers.common['Authorization'] = getUserToken()
   // 日期控件
-  const handleDateChange = (date, dateString) => {
-    console.log(date, dateString)
-  }
+  const handleDateChange = (date, dateString) => {}
 
   const [showDate, setShowDate] = useState(false)
 
@@ -48,9 +47,21 @@ const HotelContent = () => {
       const result = await getSceneList()
       if (result.data.code === '10000') {
         setList(result.data.result.records)
+      } else if (result.data.code === '30000') {
+        message.error(`已登出，请从新登录`)
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify({
+            user: '',
+            role: '',
+            name: '',
+          })
+        )
+        history.push('/login')
       }
     }
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const controlList = list.filter(
@@ -81,19 +92,6 @@ const HotelContent = () => {
     },
   }
 
-  // 图表数据
-  const tempStatus = {
-    temperature: '---',
-    humidity: '---',
-    illumination: '---',
-    chartData: {
-      xAxis: [],
-      temperature: [],
-      humidity: [],
-      illumination: [],
-    },
-  }
-
   // 数据更新
   const postDevicesController = (
     sceneId,
@@ -118,7 +116,7 @@ const HotelContent = () => {
     }
   }
 
-  const updateCurState = (deviceId, operationId, param) => {
+  const updateCurState = (deviceId, operationId, checked) => {
     const fetchData = async () => {
       const result = await postDevicesController(
         getSceneId().hotel,
@@ -126,8 +124,22 @@ const HotelContent = () => {
         deviceId,
         operationId
       )
-      if (result.data.code === '10000') {
-        console.log(result.data)
+      if (result.data.result) {
+        setTimeout(() => {
+          if (checked) {
+            message.success(`开启成功`)
+          } else {
+            message.success(`关闭成功`)
+          }
+        }, 1500)
+      } else {
+        setTimeout(() => {
+          if (checked) {
+            message.success(`开启失败，请重新尝试`)
+          } else {
+            message.success(`关闭失败，请重新尝试`)
+          }
+        }, 1500)
       }
     }
     fetchData()
@@ -148,9 +160,9 @@ const HotelContent = () => {
   }
 
   const mqttData = useContext(UserContext)
-  const [data, setData] = useState(userData)
 
-  console.log(mqttData)
+  // eslint-disable-next-line no-unused-vars
+  const [data, setData] = useState(userData)
 
   if (mqttData.cardId && !mqttData.id) {
     data.cardId = mqttData.cardId
@@ -188,14 +200,14 @@ const HotelContent = () => {
             </ul>
             <div className="view-box">
               <div className="view-box-first">
-                <HotelPanel data={data} />
+                <HotelPanel setData={setData} data={data} />
               </div>
             </div>
           </div>
         </TabPane>
-        <TabPane tab="历史数据" key="2">
-          <ChartViewList tempStatus={tempStatus} />
-        </TabPane>
+        {/* <TabPane tab="历史数据" key="2">
+          
+        </TabPane> */}
       </Tabs>
     </div>
   )

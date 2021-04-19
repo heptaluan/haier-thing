@@ -1,0 +1,10 @@
+.controls-on {
+  .active-false {
+    color: #16a6ff;
+    transition: all .3s;
+  }
+  .active-true {
+    color: blue;
+    transition: all .3s;
+  }
+}

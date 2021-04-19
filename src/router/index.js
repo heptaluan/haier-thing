@@ -7,12 +7,13 @@ import useMqtt from '../hook/useMqtt'
 export const UserContext = React.createContext('')
 
 const Router = () => {
-  // const data = useMqtt()
+  const data = useMqtt()
+  // console.log(data)
   return (
     <>
-      {/* <UserContext.Provider value={data}> */}
+      <UserContext.Provider value={data}>
         <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
-      {/* </UserContext.Provider> */}
+      </UserContext.Provider>
     </>
   )
 }

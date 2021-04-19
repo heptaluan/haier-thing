@@ -3,7 +3,8 @@
   height: 65px;
   background: #fff;
   box-shadow: 0 2px 8px #f0f1f2;
-  margin-bottom: 40px;
+  position: relative;
+  z-index: 9;
 
   .top-header {
     padding: 0 80px;
@@ -14,8 +15,12 @@
     align-items: center;
   }
 
-  .logo {
+  .logo a {
     color: rgba(0, 0, 0, 0.85);
     font-size: 24px;
+  }
+
+  .logout .ant-btn {
+    margin-left: 10px;
   }
 }

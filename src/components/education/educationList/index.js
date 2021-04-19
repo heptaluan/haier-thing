@@ -1,6 +1,16 @@
 import React from 'react'
 import './index.scss'
 
+const renderUnit = props => {
+  if (props.data.classId === 16) {
+    return <span> %</span>
+  } else if (props.data.classId === 15) {
+    return <span> ℃</span>
+  } else if (props.data.classId === 14) {
+    return <span> Lux</span>
+  }
+}
+
 const EducationList = (props) => {
   return (
     <>
@@ -9,8 +19,13 @@ const EducationList = (props) => {
         <span>{props.data.name}</span>
         <span>设备id：{props.data.id}</span>
       </div>
-      <div className="controls-on">
-        <span>{props.data.latestData ? JSON.parse(props.data.latestData.value).value : '--'}</span>
+      <div className="controls-on education-list">
+        <span className={props.data.active ? `active-${props.data.active}` : `active-false`}>
+          {props.data.latestData ? JSON.parse(props.data.latestData.value).value : '--'}
+          {
+            renderUnit(props)
+          }
+        </span>
       </div>
     </>
   )

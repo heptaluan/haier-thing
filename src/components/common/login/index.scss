@@ -5,10 +5,27 @@
   justify-content: center;
 
   .login-box {
-    width: 500px;
-    height: 300px;
-    padding: 60px;
+    width: 960px;
+    height: 433px;
     margin: 200px auto;
     border: 1px solid #ccc;
+    display: flex;
+
+    .banner {
+      width: 530px;
+      
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .ant-form {
+      width: 430px;
+      padding: 100px 40px 0;
+
+      .ant-btn {
+        width: 100%;
+      }
+    }
   }
 }

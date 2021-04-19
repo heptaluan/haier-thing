@@ -1,11 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
-import { Form, Input, Button, Modal, message } from 'antd'
-import { getUserListUrl, getAddUserUrl, getUserToken, getDelUserUrl } from '../../../api/api'
+import { Form, Input, Button, Modal, message, Select } from 'antd'
+import {
+  getUserListUrl,
+  getAddUserUrl,
+  getUserToken,
+  getDelUserUrl,
+  getCameraListUrl,
+  getUpdateCameraInfo,
+} from '../../../api/api'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import { getGatewayUrl } from '../../../api/api'
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel}) => {
+const { Option } = Select
+
+const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
+  const [gateway, setGateway] = useState([])
+
+  useEffect(() => {
+    getGateway()
+  }, [])
+
+  const getGateway = async () => {
+    const result = await axios.get(getGatewayUrl())
+    if (result.data.code === '10000') {
+      setGateway(result.data.result)
+    }
+  }
+
   const [form] = Form.useForm()
   return (
     <Modal
@@ -21,37 +44,123 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel}) => {
             form.resetFields()
             onCreate(values)
           })
-          .catch(info => {
-            console.log('Validate Failed:', info)
-          })
+          .catch(info => {})
       }}
     >
       <Form form={form} name="basic" initialValues={{ remember: true }}>
         <Form.Item
-          label="用户名"
+          label="用户姓名"
           name="username"
           rules={[{ required: true, message: '请输入用户名' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="密码"
+          label="用户密码"
           name="password"
           rules={[{ required: true, message: '请输入密码' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="再次输入密码"
+          label="确认密码"
           name="rePassword"
-          rules={[{ required: true, message: '请再次输入密码' }]}
+          dependencies={['password']}
+          rules={[
+            { required: true, message: '请再次输入密码' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve()
+                }
+                return Promise.reject(new Error('两次密码输入不一致'))
+              },
+            }),
+          ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="网关"
+          label="网关名称"
           name="gateway"
           rules={[{ required: true, message: '请输入网关' }]}
+        >
+          <Select>
+            {gateway?.map((item, index) => (
+              <Option value={item} key={`option-${index}`}>
+                {item}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </Form>
+    </Modal>
+  )
+}
+
+const CameraSetting = ({ visible, onCreate, onCancel }) => {
+  const [cameraList, setCameraList] = useState([])
+
+  useEffect(() => {
+    getCameraList()
+  }, [])
+
+  const getCameraList= async () => {
+    const result = await axios.get(getCameraListUrl())
+    if (result.data.code === '10000') {
+      setCameraList(result.data.result[0])
+    }
+  }
+
+  const [form] = Form.useForm()
+
+  form.setFieldsValue({
+    ...cameraList
+  })
+
+  return (
+    <Modal
+      visible={visible}
+      title="摄像头配置"
+      onCancel={onCancel}
+      okText="确定"
+      cancelText="取消"
+      onOk={() => {
+        form
+          .validateFields()
+          .then(values => {
+            form.resetFields()
+            onCreate(values)
+          })
+          .catch(info => {})
+      }}
+    >
+      <Form form={form} name="basic" initialValues={{ remember: true }}>
+        <Form.Item
+          label="用户姓名"
+          name="userName"
+          rules={[{ required: true, message: '请输入用户姓名' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="用户密码"
+          name="userPassword"
+          rules={[{ required: true, message: '请输入用户密码' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="连接地址"
+          name="ipAddress"
+          rules={[{ required: true, message: '请输入连接地址' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="端口地址"
+          name="portAddress"
+          rules={[{ required: true, message: '请输入端口地址' }]}
         >
           <Input />
         </Form.Item>
@@ -85,15 +194,32 @@ const Setting = () => {
       })
       .then(res => {
         if (res.data.code === '10000') {
-          message.success(`新增成功`)
           setVisible(false)
-          setTimeout(() => {
-            fetchData()
-          }, 500)
+          fetchData()
+          message.success(`新增成功`)
         } else {
-          message.success(`新增失败`)
+          message.error(`新增失败`)
           setVisible(false)
         }
+      })
+  }
+
+  const [cameraVisible, setCameraVisible] = useState(false)
+  const onCameraCreate = values => {
+    axios
+      .post(getUpdateCameraInfo(), {
+        ...values,
+      })
+      .then(res => {
+        console.log(res)
+        // if (res.data.code === '10000') {
+        //   setVisible(false)
+        //   fetchData()
+        //   message.success(`新增成功`)
+        // } else {
+        //   message.error(`新增失败`)
+        //   setVisible(false)
+        // }
       })
   }
 
@@ -103,28 +229,44 @@ const Setting = () => {
 
   const deleteUser = id => {
     const userData = data.find(item => item.userNo === id)
-    console.log(userData)
-    axios
-      .delete(getDelUserUrl(userData.userNo))
-      .then(res => {
-        if (res.data.code === '10000') {
-          message.success(`删除成功`)
-          setVisible(false)
-          setTimeout(() => {
-            fetchData()
-          }, 500)
-        }
-      })
+    axios.delete(getDelUserUrl(userData.userNo)).then(res => {
+      if (res.data.code === '10000') {
+        setVisible(false)
+        fetchData()
+        message.success(`删除成功`)
+      }
+    })
   }
 
   const logOut = () => {
-    localStorage.setItem('user', '')
+    localStorage.setItem(
+      'userInfo',
+      JSON.stringify({
+        user: '',
+        role: '',
+        name: '',
+      })
+    )
     history.push('/login')
+    message.success(`登出成功`)
+  }
+
+  const handleCameraSetting = () => {
+    setCameraVisible(true)
   }
 
   return (
     <div className="setting-box-wrap">
       <div className="login-bar">
+        <Button
+          type="primary"
+          style={{ margin: '0 20px 0 0' }}
+          onClick={() => {
+            handleCameraSetting()
+          }}
+        >
+          摄像头配置
+        </Button>
         <Button
           onClick={() => {
             logOut()
@@ -154,10 +296,17 @@ const Setting = () => {
           {data.map(item => (
             <li key={item.userNo}>
               <span className="name">{item.username}</span>
-              <span className="password">******</span>
+              <span className="password">****</span>
               <span className="gateway">{item.gateway}</span>
               <span className="edit-box">
-                <Button onClick={() => { deleteUser(item.userNo) }} type="primary">删除</Button>
+                <Button
+                  onClick={() => {
+                    deleteUser(item.userNo)
+                  }}
+                  type="primary"
+                >
+                  删除
+                </Button>
               </span>
             </li>
           ))}
@@ -168,6 +317,13 @@ const Setting = () => {
         onCreate={onCreate}
         onCancel={() => {
           setVisible(false)
+        }}
+      />
+      <CameraSetting
+        visible={cameraVisible}
+        onCreate={onCameraCreate}
+        onCancel={() => {
+          setCameraVisible(false)
         }}
       />
     </div>

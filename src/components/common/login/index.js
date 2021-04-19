@@ -1,9 +1,10 @@
 import React from 'react'
 import './index.scss'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import { getUserLoginUrl, getUserToken } from '../../../api/api'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import banner from '../../../assets/images/banner.png'
 
 const Login = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
@@ -15,11 +16,13 @@ const Login = () => {
       })
       .then(res => {
         if (res.data.code === '10000') {
+          message.success(`登录成功`)
           localStorage.setItem(
             'userInfo',
             JSON.stringify({
               user: res.data.result.user.token,
               role: res.data.result.role,
+              name: value.identity
             })
           )
           if (res.data.result.role === 'sysadmin') {
@@ -27,6 +30,10 @@ const Login = () => {
           } else if (res.data.result.role === 'user') {
             history.push('/home')
           }
+        } else if (res.data.code === '20006') {
+          message.error(`用户名或密码错误`)
+        } else if (res.data.code === '20008') {
+          message.error(`用户不存在`)
         }
       })
   }
@@ -34,6 +41,9 @@ const Login = () => {
   return (
     <div className="login-box-wrap">
       <div className="login-box">
+        <div className="banner">
+          <img src={banner} alt=""/>
+        </div>
         <Form
           name="normal_login"
           className="login-form"

@@ -36,19 +36,19 @@ const HomeMenu = props => {
   return (
     <div className="home-menu">
       <Menu
-        style={{ width: 250 }}
+        style={{ width: 200, background: '#f8f8f8' }}
         mode="inline"
         theme="light"
         defaultSelectedKeys={['/family']}
         selectedKeys={[history.location.pathname]}
         onClick={handleChangeScene}
       >
-        <Menu.Item
+        {/* <Menu.Item
           key="/"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-shouye" />}
         >
           <Link to="/">首页</Link>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item
           key="/family"
           icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
@@ -63,13 +63,13 @@ const HomeMenu = props => {
         </Menu.Item>
         <Menu.Item
           key="/hotel"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiudian" />}
         >
           <Link to="/hotel">智慧酒店</Link>
         </Menu.Item>
         <Menu.Item
           key="/education"
-          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaju" />}
+          icon={<IconFont style={{ fontSize: '24px' }} type="icon-jiaoyu" />}
         >
           <Link to="/education">智慧教育</Link>
         </Menu.Item>

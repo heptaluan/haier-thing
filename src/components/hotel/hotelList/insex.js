@@ -47,7 +47,7 @@ const HotelList = props => {
               props.data.operations.find(item => item.operation_type === 1) &&
                 props.data.operations.find(item => item.operation_type === 1)
                   .id,
-              false
+              true
             )
           }
         >

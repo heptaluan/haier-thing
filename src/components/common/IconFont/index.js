@@ -1,7 +1,8 @@
 import { createFromIconfontCN } from '@ant-design/icons'
+import iconfont from './iconfont'
 
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2435701_x5q0hjp364.js',
+  scriptUrl: { iconfont },
 })
 
 export default IconFont

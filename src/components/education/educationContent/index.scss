@@ -2,4 +2,24 @@
   width: 100%;
   height: 100%;
   padding: 0 64px;
+
+  .chart-list-box {
+    width: 100%;
+    height: 100%;
+
+    .chart-box {
+      padding: 10px 0 0 10px;
+      width: 360px;
+      height: 320px;
+      float: left;
+      border: 1px solid #eeeeee;
+      box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      margin: 20px 20px 0 0 ;
+    }
+  }
+}
+
+.education-view-box {
+  height: 300px !important;
 }

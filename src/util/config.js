@@ -1,0 +1,51 @@
+export const latestConfig = [
+  {
+    id: 16,
+    type: 'line',
+    title: '湿度 %',
+    x: [],
+    y: [],
+  },
+  {
+    id: 15,
+    type: 'line',
+    title: '温度 ℃',
+    x: [],
+    y: [],
+  },
+  {
+    id: 14,
+    type: 'line',
+    title: '光照 Lux',
+    x: [],
+    y: [],
+  },
+  {
+    id: 3,
+    type: 'pie',
+    title: '燃气检测',
+    x: [],
+    y: [],
+  },
+  {
+    id: 5,
+    type: 'pie',
+    title: '人体感应',
+    x: [],
+    y: [],
+  },
+  {
+    id: 2,
+    type: 'pie',
+    title: '烟雾感应',
+    x: [],
+    y: [],
+  },
+  {
+    id: 4,
+    type: 'pie',
+    title: '红外警戒',
+    x: [],
+    y: [],
+  },
+]

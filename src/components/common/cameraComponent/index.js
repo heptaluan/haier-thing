@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import './index.scss'
 import flvjs from 'flv.js'
+import { getCameraUrl } from '../../../api/api'
 
 const CameraComponent = () => {
   const multiVideo = useRef()
@@ -12,7 +13,7 @@ const CameraComponent = () => {
         isLive: true,
         lazyLoad: false,
         autoCleanupSourceBuffer: true,
-        url: 'http://192.168.1.129/live?port=1935&app=myapp&stream=monitor1',
+        url: getCameraUrl,
       })
       flvPlayer.attachMediaElement(multiVideo.current)
       flvPlayer.load()

@@ -1,15 +1,51 @@
 import React from 'react'
 import './index.scss'
-import { Button, Switch } from 'antd'
+import { Button, Switch, Badge } from 'antd'
 
 const renderFirstVal = props => {
   switch (props.data.classId) {
     case 16:
-      return <span>湿度：{JSON.parse(props.data.latestData.value).value}</span>
+      return (
+        <span
+          className={
+            props.data.active ? `active-${props.data.active}` : `active-false`
+          }
+        >
+          {props.data.latestData && JSON.parse(props.data.latestData.value).value} %
+        </span>
+      )
     case 14:
-      return <span>光照：{JSON.parse(props.data.latestData.value).value}</span>
+      return (
+        <span
+          className={
+            props.data.active ? `active-${props.data.active}` : `active-false`
+          }
+        >
+          {props.data.latestData && JSON.parse(props.data.latestData.value).value} Lux
+        </span>
+      )
     case 15:
-      return <span>温度：{JSON.parse(props.data.latestData.value).value}</span>
+      return (
+        <span
+          className={
+            props.data.active ? `active-${props.data.active}` : `active-false`
+          }
+        >
+          {props.data.latestData && JSON.parse(props.data.latestData.value).value} ℃
+        </span>
+      )
+    case 3:
+    case 10:
+      return (
+        <span>
+          {props.data.latestData &&
+          JSON.parse(props.data.latestData.value).value === 1 ? (
+            <Badge count={'异常'} style={{ backgroundColor: '#ff4d4f' }} />
+          ) : (
+            <Badge count={'正常'} style={{ backgroundColor: '#52c41a' }} />
+          )}
+        </span>
+      )
     case 8:
     case 11:
     case 19:
@@ -41,8 +77,15 @@ const renderLasttVal = (props, onChange) => {
     case 15:
       return null
     case 3:
-    case 10:
       return <Switch checked={props.data.deviceState === 0 ? false : true} defaultChecked={false} onChange={onChange} />
+    case 10:
+      return (
+        <div>
+          <Button onClick={() => onChange(false)}>关闭</Button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <Button onClick={() => onChange(true)}>开启</Button>
+        </div>
+      )
     case 8:
     case 11:
     case 19:
@@ -52,7 +95,7 @@ const renderLasttVal = (props, onChange) => {
             props.updateCurState(
               props.data.id,
               props.data.operations.find(item => item.operation_type === 1).id,
-              false
+              true
             )
           }
         >

@@ -1,40 +1,33 @@
 import { useState, useEffect } from 'react'
-import mqtt from 'mqtt'
+import { PahoMQTT } from '../assets/js/mqtt'
+import { getMqttConfig } from '../api/api'
 
 function useMqtt() {
   const [data, setData] = useState({})
-
-  const options = {
-    clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
-    username: 'admin',
-    password: 'admin',
-  }
-
-  const connectUrl = `ws://192.168.1.198:8083/mqtt`
-  const client = mqtt.connect(connectUrl, options)
+  const client = new PahoMQTT.Client(
+    getMqttConfig.ip,
+    getMqttConfig.port,
+    getMqttConfig.clientId
+  )
 
   useEffect(() => {
-    client.on('error', error => {
-      console.log('连接失败:', error)
+    client.onConnectionLost = responseObject => {
+      if (responseObject.errorCode !== 0) {
+        console.log('onConnectionLost:' + responseObject.errorMessage)
+      }
+    }
+    client.onMessageArrived = message => {
+      setData(JSON.parse(message.payloadString))
+    }
+    client.connect({
+      onSuccess: () => {
+        client.subscribe('device_data')
+        client.subscribe('card_data')
+        const message = new PahoMQTT.Message('Hello')
+        message.destinationName = 'World'
+        client.send(message)
+      },
     })
-
-    client.on('connect', function () {
-      client.subscribe('device_data', function (err) {
-        if (!err) {
-          client.publish('presence', 'Hello mqtt')
-        }
-      })
-      client.subscribe('card_data', function (err) {
-        if (!err) {
-          client.publish('presence', 'Hello card')
-        }
-      })
-    })
-
-    client.on('message', (topic, message) => {
-      setData(JSON.parse(message.toString()))
-    })
-    // 只需要执行一次，所以不需要添加依赖
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
