@@ -2,7 +2,8 @@
   width: 100%;
   height: 100%;
   position: relative;
-  
+  background: #eee;
+
   .login-bar {
     width: 100%;
     height: 60px;
@@ -18,7 +19,7 @@
   }
 
   .btn-groups {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
 
   .table-header {
@@ -28,32 +29,23 @@
     background: #eee;
     display: flex;
     text-align: center;
-
-    .name, .password, .gateway {
-      width: 28%;
-    }
-
-    .edit-box {
-      width: 16%;
-      margin-left: auto;
-    }
   }
 
   .user-list {
     width: 100%;
-    
+
     li {
       display: flex;
       text-align: center;
       height: 60px;
       line-height: 60px;
+      border-bottom: 1px solid #eee;
 
-      .name, .password, .gateway {
-        width: 28%;
+      &:last-child {
+        border-bottom: none;
       }
-  
+
       .edit-box {
-        width: 16%;
         margin-left: auto;
         display: flex;
         align-items: center;
@@ -61,4 +53,89 @@
       }
     }
   }
+
+  .tab-one {
+    .name,
+    .password,
+    .gateway,
+    .schoolname {
+      width: 22.5%;
+    }
+
+    .edit-box {
+      width: 10%;
+      margin-left: auto;
+    }
+
+    .user-list {
+      .name,
+      .password,
+      .gateway,
+      .schoolname {
+        width: 22.5%;
+      }
+
+      .edit-box {
+        width: 10%;
+      }
+    }
+  }
+
+  .tab-two {
+    .btn-groups {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .name, .schoolname {
+      width: 40%;
+    }
+
+    .edit-box {
+      width: 20%;
+      margin-left: auto;
+    }
+
+    .user-list {
+      .name, .schoolname {
+        width: 40%;
+      }
+
+      .edit-box {
+        width: 20%;
+      }
+    }
+  }
+
+  .tab-three {
+    .name,
+    .password,
+    .ip-address,
+    .port-address {
+      width: 22.5%;
+    }
+
+    .edit-box {
+      width: 10%;
+      margin-left: auto;
+    }
+
+    .user-list {
+      .name,
+      .password,
+      .ip-address,
+      .port-address {
+        width: 22.5%;
+      }
+
+      .edit-box {
+        width: 10%;
+      }
+    }
+  }
+}
+
+.card-container {
+  padding: 24px;
+  background: #fff;
 }
