@@ -1,41 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
-import { Form, Input, Button, Modal, message, Select } from 'antd'
+import { Form, Input, Button, Modal, message, Select, Empty } from 'antd'
 import {
   getUserListUrl,
   getAddUserUrl,
   getUserToken,
   getDelUserUrl,
   getGatewayUrl,
+  getSchoolListUrl,
 } from '../../../api/api'
 import axios from 'axios'
 
 const { Option } = Select
 
-const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
+const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
   const [gateway, setGateway] = useState([])
-  const [schoolList, setschoolList] = useState([])
 
   useEffect(() => {
     getGateway()
-  }, [])
-
-  useEffect(() => {
-    getSchoolList()
   }, [])
 
   const getGateway = async () => {
     const result = await axios.get(getGatewayUrl())
     if (result.data.code === '10000') {
       setGateway(result.data.result)
-    }
-  }
-
-  // 大学的列表信息
-  const getSchoolList = async () => {
-    const result = await axios.get(getGatewayUrl())
-    if (result.data.code === '10000') {
-      setschoolList(result.data.result)
     }
   }
 
@@ -91,14 +79,14 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="大学名称"
-          name="schoolname"
-          rules={[{ required: true, message: '请选择大学名称' }]}
+          label="学校名称"
+          name="schoolId"
+          rules={[{ required: true, message: '请选择学校名称' }]}
         >
-          <Select>
+          <Select placeholder="请选择学校">
             {schoolList?.map((item, index) => (
-              <Option value={item} key={`option-${index}`}>
-                {item}
+              <Option value={item.id} key={`option-${index}`}>
+                {item.schoolName}
               </Option>
             ))}
           </Select>
@@ -108,7 +96,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           name="gateway"
           rules={[{ required: true, message: '请选择网关' }]}
         >
-          <Select>
+          <Select placeholder="请选择网关">
             {gateway?.map((item, index) => (
               <Option value={item} key={`option-${index}`}>
                 {item}
@@ -123,23 +111,32 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
 
 const StepOne = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
-  const [data, setData] = useState([
-    {
-      username: 123,
-      gateway: 123,
-      schoolname: '武汉大学',
-      userNo: 1,
-    },
-  ])
+  const [data, setData] = useState([])
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
+  const [schoolList, setschoolList] = useState([])
 
+  useEffect(() => {
+    fetchData()
+    getSchoolList()
+  }, [])
+
+  // 用户列表
   const fetchData = async () => {
-    const result = await axios.get(getUserListUrl())
+    const result = await axios.post(getUserListUrl(), {
+      page: 1,
+      size: 10,
+      school: null,
+    })
     if (result.data.code === '10000') {
       setData(result.data.result.records)
+    }
+  }
+
+  // 学校列表
+  const getSchoolList = async () => {
+    const result = await axios.get(getSchoolListUrl())
+    if (result.data.code === '10000') {
+      setschoolList(result.data.result.records)
     }
   }
 
@@ -177,6 +174,23 @@ const StepOne = () => {
     })
   }
 
+  const onChange = val => {
+    axios
+      .post(getUserListUrl(), {
+        page: 1,
+        size: 10,
+        school: val ? [val] : null,
+      })
+      .then(res => {
+        if (res.data.code === '10000') {
+          setData(res.data.result.records)
+          setTimeout(() => {
+            message.success(`筛选成功`)
+          }, 300)
+        }
+      })
+  }
+
   return (
     <div className="tab-one">
       <div className="btn-groups">
@@ -188,33 +202,51 @@ const StepOne = () => {
         >
           新增用户
         </Button>
+        <div className="search-input">
+          <Select
+            style={{ width: 150 }}
+            placeholder="请选择筛选条件"
+            onChange={onChange}
+            allowClear
+          >
+            {schoolList?.map((item, index) => (
+              <Option value={item.id} key={`option-${index}`}>
+                {item.schoolName}
+              </Option>
+            ))}
+          </Select>
+        </div>
       </div>
       <div className="table-header">
         <span className="name">用户名</span>
         <span className="password">密码</span>
-        <span className="schoolname">大学名称</span>
+        <span className="schoolname">学校名称</span>
         <span className="gateway">网关</span>
         <span className="edit-box">操作</span>
       </div>
       <ul className="user-list">
-        {data.map(item => (
-          <li key={item.userNo}>
-            <span className="name">{item.username}</span>
-            <span className="password">****</span>
-            <span className="schoolname">{item.schoolname}</span>
-            <span className="gateway">{item.gateway}</span>
-            <span className="edit-box">
-              <Button
-                onClick={() => {
-                  deleteUser(item.userNo)
-                }}
-                type="primary"
-              >
-                删除
-              </Button>
-            </span>
-          </li>
-        ))}
+        {data.length === 0 ? (
+          <Empty />
+        ) : (
+          data.map(item => (
+            <li key={item.userNo}>
+              <span className="name">{item.username}</span>
+              <span className="password">****</span>
+              <span className="schoolname">{item.school.schoolName}</span>
+              <span className="gateway">{item.gateway}</span>
+              <span className="edit-box">
+                <Button
+                  onClick={() => {
+                    deleteUser(item.userNo)
+                  }}
+                  type="primary"
+                >
+                  删除
+                </Button>
+              </span>
+            </li>
+          ))
+        )}
       </ul>
       <CollectionCreateForm
         visible={visible}
@@ -222,6 +254,7 @@ const StepOne = () => {
         onCancel={() => {
           setVisible(false)
         }}
+        schoolList={schoolList}
       />
     </div>
   )

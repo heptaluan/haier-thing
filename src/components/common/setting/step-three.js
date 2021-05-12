@@ -1,37 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
-import { Form, Input, Button, Modal, message } from 'antd'
+import { Form, Input, Button, Modal, message, Empty } from 'antd'
 import {
-  getUserListUrl,
   getUserToken,
-  getDelUserUrl,
   getCameraListUrl,
   getUpdateCameraInfo,
+  pushCameraUrl,
+  getDeleteCameraUrl,
 } from '../../../api/api'
 import axios from 'axios'
 
-const CameraSetting = ({ visible, onCreate, onCancel }) => {
-  const [cameraList, setCameraList] = useState([])
-
-  useEffect(() => {
-    getCameraList()
-  }, [])
-
-  const getCameraList = async () => {
-    const result = await axios.get(getCameraListUrl())
-    if (result.data.code === '10000') {
-      setCameraList(result.data.result[0])
-    }
-  }
-
+const CameraSetting = ({ visible, onCreate, onCancel, data }) => {
   const [form] = Form.useForm()
-
-  form.setFieldsValue({
-    ...cameraList,
-  })
-
+  setTimeout(() => {
+    data.userName ? form.setFieldsValue({ ...data }) : form.resetFields()
+  }, 300)
   return (
     <Modal
+      forceRender
       visible={visible}
       title="新增摄像头"
       onCancel={onCancel}
@@ -83,59 +69,90 @@ const CameraSetting = ({ visible, onCreate, onCancel }) => {
 
 const StepThree = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
-  const [data, setData] = useState([
-    {
-      userNo: 1,
-      userName: 123,
-      userPassword: 123,
-      ipAddress: '123.123.123.123',
-      portAddress: '123.123.123.123',
-    },
-  ])
+
+  const [cameraList, setCameraList] = useState([])
+
+  useEffect(() => {
+    getCameraList()
+  }, [])
+
+  const getCameraList = async () => {
+    const result = await axios.get(getCameraListUrl())
+    if (result.data.code === '10000') {
+      setCameraList(result.data.result)
+    }
+  }
 
   const [cameraVisible, setCameraVisible] = useState(false)
-  const onCameraCreate = values => {
+  const onSubmit = values => {
     axios
       .post(getUpdateCameraInfo(), {
+        id: curData.id ? curData.id : null,
         ...values,
       })
       .then(res => {
-        console.log(res)
         if (res.data.code === '10000') {
           setCameraVisible(false)
-          fetchData()
-          message.success(`新增成功`)
+          setTimeout(() => {
+            getCameraList()
+          }, 300)
+          if (curData.userName) {
+            message.success(`更新成功`)
+          } else {
+            message.success(`新增成功`)
+          }
         } else {
-          message.error(`新增失败`)
+          if (curData.userName) {
+            message.error(`更新失败`)
+          } else {
+            message.error(`新增失败`)
+          }
           setCameraVisible(false)
         }
       })
   }
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
-
-  const fetchData = async () => {
-    // 换成摄像头地址
-    const result = await axios.get(getUserListUrl())
-    if (result.data.code === '10000') {
-      setData(result.data.result.records)
-    }
-  }
-
   const handleDelete = id => {
-    const userData = data.find(item => item.userNo === id)
-    axios.delete(getDelUserUrl(userData.userNo)).then(res => {
+    axios.delete(getDeleteCameraUrl(id)).then(res => {
       if (res.data.code === '10000') {
         setCameraVisible(false)
-        fetchData()
+        getCameraList()
         message.success(`删除成功`)
       }
     })
   }
 
-  const handleCameraSetting = () => {
+  const handleStart = id => {
+    axios.get(pushCameraUrl(id)).then(res => {
+      if (res.data.code === '20002') {
+        message.success(`推流开启成功`)
+      }
+      setTimeout(() => {
+        getCameraList()
+      }, 300)
+    })
+  }
+
+  const handleEnd = id => {
+    axios.delete(pushCameraUrl(id)).then(res => {
+      if (res.data.code === '10000') {
+        message.success(`关闭成功`)
+      }
+      setTimeout(() => {
+        getCameraList()
+      }, 300)
+    })
+  }
+
+  const [curData, setCurData] = useState({})
+
+  const open = () => {
+    setCurData({})
+    setCameraVisible(true)
+  }
+
+  const edit = item => {
+    setCurData(item)
     setCameraVisible(true)
   }
 
@@ -145,7 +162,7 @@ const StepThree = () => {
         <Button
           type="primary"
           onClick={() => {
-            handleCameraSetting()
+            open()
           }}
         >
           新增摄像头
@@ -156,34 +173,67 @@ const StepThree = () => {
         <span className="password">用户密码</span>
         <span className="ip-address">连接地址</span>
         <span className="port-address">端口地址</span>
+        <span className="state">摄像头状态</span>
         <span className="edit-box">操作</span>
       </div>
       <ul className="user-list">
-        {data.map(item => (
-          <li key={item.userNo}>
-            <span className="name">{item.userName}</span>
-            <span className="password">****</span>
-            <span className="ip-address">{item.ipAddress}</span>
-            <span className="port-address">{item.portAddress}</span>
-            <span className="edit-box">
-              <Button
-                onClick={() => {
-                  handleDelete(item.userNo)
-                }}
-                type="primary"
-              >
-                删除
-              </Button>
-            </span>
-          </li>
-        ))}
+        {cameraList.length === 0 ? (
+          <Empty />
+        ) : (
+          cameraList.map(item => (
+            <li key={item.id}>
+              <span className="name">{item.userName}</span>
+              <span className="password">****</span>
+              <span className="ip-address">{item.ipAddress}</span>
+              <span className="port-address">{item.portAddress}</span>
+              <span className="state">
+                {item.status === 0 ? '已关闭' : '推流中'}
+              </span>
+              <span className="edit-box">
+                <Button
+                  onClick={() => {
+                    handleStart(item.id)
+                  }}
+                  type="primary"
+                >
+                  开启推流
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleEnd(item.id)
+                  }}
+                  type="primary"
+                >
+                  关闭推流
+                </Button>
+                <Button
+                  onClick={() => {
+                    edit(item)
+                  }}
+                  type="primary"
+                >
+                  编辑
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleDelete(item.id)
+                  }}
+                  type="primary"
+                >
+                  删除
+                </Button>
+              </span>
+            </li>
+          ))
+        )}
       </ul>
       <CameraSetting
         visible={cameraVisible}
-        onCreate={onCameraCreate}
+        onCreate={onSubmit}
         onCancel={() => {
           setCameraVisible(false)
         }}
+        data={curData}
       />
     </div>
   )

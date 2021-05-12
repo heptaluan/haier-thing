@@ -1,36 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
-import { Form, Input, Button, Modal, message, Select } from 'antd'
+import { Form, Input, Button, Modal, message, Empty } from 'antd'
 import {
-  getUserListUrl,
-  getAddUserUrl,
+  getSchoolListUrl,
   getUserToken,
-  getDelUserUrl,
+  addSchoolListUrl,
+  delSchoolListUrl,
 } from '../../../api/api'
 import axios from 'axios'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
-const { Option } = Select
+const { confirm } = Modal
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
-  const [schoolList, setschoolList] = useState([])
-
-  useEffect(() => {
-    getSchoolList()
-  }, [])
-
-  // 大学的列表信息
-  const getSchoolList = async () => {
-    const result = await axios.get(getDelUserUrl())
-    if (result.data.code === '10000') {
-      setschoolList(result.data.result)
-    }
-  }
-
   const [form] = Form.useForm()
+  const formItemLayout = {
+    labelCol: { span: 4 },
+  }
   return (
     <Modal
       visible={visible}
-      title="新增大学"
+      title="新增学校"
       onCancel={onCancel}
       okText="确定"
       cancelText="取消"
@@ -44,64 +34,59 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           .catch(info => {})
       }}
     >
-      <Form form={form} name="basic" initialValues={{ remember: true }}>
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="basic"
+        initialValues={{ remember: true }}
+      >
         <Form.Item
-          label="大学名称"
-          name="schoolname"
-          rules={[{ required: true, message: '请选择大学名称' }]}
+          label="学校名称"
+          name="schoolName"
+          rules={[{ required: true, message: '请输入学校名称' }]}
         >
-          <Select>
-            {schoolList?.map((item, index) => (
-              <Option value={item} key={`option-${index}`}>
-                {item}
-              </Option>
-            ))}
-          </Select>
+          <Input placeholder="请输入学校名称" />
+        </Form.Item>
+        <Form.Item
+          label="备注信息"
+          name="remark"
+          rules={[{ message: '请输入备注信息' }]}
+        >
+          <Input placeholder="请输入备注信息" />
         </Form.Item>
       </Form>
     </Modal>
   )
 }
 
-const { Search } = Input
-
 const StepTwo = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
-  const [data, setData] = useState([
-    {
-      id: 1,
-      name: '张三',
-      schoolname: '武汉大学',
-    },
-    {
-      id: 2,
-      name: '李四',
-      schoolname: '未绑定',
-    },
-  ])
 
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
+  const [schoolList, setschoolList] = useState([])
 
-  const fetchData = async () => {
-    const result = await axios.get(getUserListUrl())
+  useEffect(() => {
+    getSchoolList()
+  }, [])
+
+  // 学校的列表信息
+  const getSchoolList = async () => {
+    const result = await axios.get(getSchoolListUrl())
     if (result.data.code === '10000') {
-      setData(result.data.result.records)
+      setschoolList(result.data.result.records)
     }
   }
 
-  // 新增大学
+  // 新增学校
   const [visible, setVisible] = useState(false)
   const onCreate = values => {
     axios
-      .post(getAddUserUrl(), {
+      .post(addSchoolListUrl(), {
         ...values,
       })
       .then(res => {
         if (res.data.code === '10000') {
           setVisible(false)
-          fetchData()
+          getSchoolList()
           message.success(`新增成功`)
         } else {
           message.error(`新增失败`)
@@ -114,73 +99,68 @@ const StepTwo = () => {
     setVisible(true)
   }
 
-  const handleBind = id => {
-    const userData = data.find(item => item.userNo === id)
-    axios.delete(getDelUserUrl(userData.userNo)).then(res => {
-      if (res.data.code === '10000') {
-        setVisible(false)
-        fetchData()
-        message.success(`删除成功`)
-      }
+  const handleDelete = id => {
+    confirm({
+      title: '是否确定删除学校信息',
+      icon: <ExclamationCircleOutlined />,
+      content: '删除学校信息的同时也会清空该学校下的用户信息',
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        const userData = schoolList.find(item => item.id === id)
+        axios.delete(delSchoolListUrl(userData.id)).then(res => {
+          if (res.data.code === '10000') {
+            setVisible(false)
+            getSchoolList()
+            message.success(`删除成功`)
+          }
+        })
+      },
+      onCancel() {
+        console.log('Cancel')
+      },
     })
-  }
-
-  const onSearch = val => {
-    setData([
-      {
-        id: 1,
-        name: '张三',
-        schoolname: '武汉大学',
-      }
-    ])
   }
 
   return (
     <div className="tab-two">
       <div className="btn-groups">
-        {/* <Button
+        <Button
           type="primary"
           onClick={() => {
             open()
           }}
         >
-          新增大学
-        </Button> */}
-        <div></div>
-        <div className="search-input">
-          <Search
-            placeholder="请输入需要查询的大学"
-            onSearch={onSearch}
-            style={{ width: 300 }}
-          />
-        </div>
+          新增学校
+        </Button>
       </div>
       <div className="table-header">
-        <span className="name">用户</span>
-        <span className="schoolname">大学名称</span>
-        <span className="edit-box">状态</span>
+        <span className="name">学校名称</span>
+        <span className="desc">备注</span>
+        <span className="edit-box">操作</span>
       </div>
       <ul className="user-list">
-        {data.map(item => (
-          <li key={item.id}>
-            <span className="name">{item.name}</span>
-            <span className="schoolname">{item.schoolname}</span>
-            <span className="edit-box">
-              {item.schoolname === '未绑定' ? (
+        {schoolList.length === 0 ? (
+          <Empty />
+        ) : (
+          schoolList?.map(item => (
+            <li key={item.id}>
+              <span className="name">{item.schoolName}</span>
+              <span className="desc">{item.remark}</span>
+              <span className="edit-box">
                 <Button
                   onClick={() => {
-                    open(item.id)
+                    handleDelete(item.id)
                   }}
                   type="primary"
                 >
-                  绑定
+                  删除
                 </Button>
-              ) : (
-                '已绑定'
-              )}
-            </span>
-          </li>
-        ))}
+              </span>
+            </li>
+          ))
+        )}
       </ul>
       <CollectionCreateForm
         visible={visible}

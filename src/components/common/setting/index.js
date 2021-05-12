@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import './index.scss'
-import { Button, Modal, message, Tabs } from 'antd'
-import {
-  getUserToken,
-} from '../../../api/api'
+import { Button, message, Tabs } from 'antd'
+import { getUserToken } from '../../../api/api'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
@@ -16,6 +14,10 @@ const { TabPane } = Tabs
 const Setting = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
   const history = useHistory()
+  const [curTabKey, setCurTabKey] = useState('1')
+  const changeTabs = activeKey => {
+    setCurTabKey(activeKey)
+  }
 
   const logOut = () => {
     localStorage.setItem(
@@ -43,20 +45,19 @@ const Setting = () => {
       </div>
       <div className="setting-box">
         <div className="card-container">
-          <Tabs defaultActiveKey="1">
+          <Tabs defaultActiveKey="1" onChange={changeTabs}>
             <TabPane tab="用户管理" key="1">
-              <StepOne />
-             </TabPane>
+              {curTabKey === '1' ? <StepOne /> : <div></div>}
+            </TabPane>
             <TabPane tab="学校管理" key="2">
-              <StepTwo />
+              {curTabKey === '2' ? <StepTwo /> : <div></div>}
             </TabPane>
             <TabPane tab="摄像头管理" key="3">
-              <StepThree />
+              {curTabKey === '3' ? <StepThree /> : <div></div>}
             </TabPane>
           </Tabs>
         </div>
       </div>
-      
     </div>
   )
 }
