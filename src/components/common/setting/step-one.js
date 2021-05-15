@@ -15,6 +15,7 @@ const { Option } = Select
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
   const [gateway, setGateway] = useState([])
+  const [val, setVal] = useState('请选择网关')
 
   useEffect(() => {
     getGateway()
@@ -28,6 +29,14 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
   }
 
   const [form] = Form.useForm()
+
+  const onSelect = (val) => {
+    setVal(val)
+    form.setFieldsValue({
+      gateway: val,
+    })
+  }
+
   return (
     <Modal
       visible={visible}
@@ -36,6 +45,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
       okText="确定"
       cancelText="取消"
       onOk={() => {
+        setVal('请选择网关')
         form
           .validateFields()
           .then(values => {
@@ -96,15 +106,16 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
           name="gateway"
           rules={[{ required: true, message: '请选择网关' }]}
         >
-          <Select placeholder="请选择网关">
-            {gateway?.map((item, index) => (
-              <Option value={item} key={`option-${index}`}>
-                {item}
-              </Option>
-            ))}
-          </Select>
+          <Input className="form-input" placeholder="请选择网关或者手动输入" />
         </Form.Item>
       </Form>
+      <Select value={val} className="form-select" placeholder="请选择网关" onSelect={onSelect}>
+        {gateway?.map((item, index) => (
+          <Option value={item} key={`option-${index}`}>
+            {item}
+          </Option>
+        ))}
+      </Select>
     </Modal>
   )
 }
@@ -143,6 +154,8 @@ const StepOne = () => {
   // 新增用户
   const [visible, setVisible] = useState(false)
   const onCreate = values => {
+    console.log(values)
+    return
     axios
       .post(getAddUserUrl(), {
         ...values,
