@@ -58,6 +58,17 @@ const HotelContent = () => {
           })
         )
         history.push('/login')
+      } else if (result.data.code === '40000') {
+        message.error(`软件未授权`)
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify({
+            user: '',
+            role: '',
+            name: ''
+          })
+        ) 
+        history.push('/login')
       }
     }
     fetchData()
