@@ -124,8 +124,10 @@ const StepThree = () => {
 
   const handleStart = id => {
     axios.get(pushCameraUrl(id)).then(res => {
-      if (res.data.code === '20002') {
+      if (res.data.code === '10000') {
         message.success(`推流开启成功`)
+      } else {
+        message.error(`推流开启失败，请重新尝试`)
       }
       setTimeout(() => {
         getCameraList()
@@ -137,6 +139,8 @@ const StepThree = () => {
     axios.delete(pushCameraUrl(id)).then(res => {
       if (res.data.code === '10000') {
         message.success(`关闭成功`)
+      } else {
+        message.error(`关闭失败，请重新尝试`)
       }
       setTimeout(() => {
         getCameraList()

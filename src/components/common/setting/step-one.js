@@ -154,8 +154,6 @@ const StepOne = () => {
   // 新增用户
   const [visible, setVisible] = useState(false)
   const onCreate = values => {
-    console.log(values)
-    return
     axios
       .post(getAddUserUrl(), {
         ...values,
