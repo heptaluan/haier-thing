@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
-import { Form, Input, Button, Modal, message, Empty } from 'antd'
+import { Form, Input, Button, Modal, message, Select, Empty } from 'antd'
 import {
   getUserToken,
   getCameraListUrl,
   getUpdateCameraInfo,
   pushCameraUrl,
   getDeleteCameraUrl,
+  getUserListUrl,
+  getBindUserUrl,
 } from '../../../api/api'
 import axios from 'axios'
 
@@ -67,14 +69,72 @@ const CameraSetting = ({ visible, onCreate, onCancel, data }) => {
   )
 }
 
+const { Option } = Select
+
+const BindUser = ({ visible, onCreate, onCancel, data }) => {
+  const [form] = Form.useForm()
+  setTimeout(() => {
+    data.userName ? form.setFieldsValue({ ...data }) : form.resetFields()
+  }, 300)
+  return (
+    <Modal
+      forceRender
+      visible={visible}
+      title="新增摄像头"
+      onCancel={onCancel}
+      okText="确定"
+      cancelText="取消"
+      onOk={() => {
+        form
+          .validateFields()
+          .then(values => {
+            form.resetFields()
+            onCreate(values)
+          })
+          .catch(info => {})
+      }}
+    >
+      <Form form={form} name="basic" initialValues={{ remember: true }}>
+        <Form.Item
+          label="用户列表"
+          name="cameraId"
+          rules={[{ required: true, message: '请选择用户' }]}
+        >
+          <Select placeholder="请选择用户">
+            {data?.map((item, index) => (
+              <Option value={item.userNo} key={`option-${index}`}>
+                {item.username}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </Form>
+    </Modal>
+  )
+}
+
 const StepThree = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
 
   const [cameraList, setCameraList] = useState([])
+  const [data, setData] = useState([])
 
   useEffect(() => {
+    fetchData()
     getCameraList()
   }, [])
+
+  // 用户列表
+  const fetchData = async () => {
+    const result = await axios.post(getUserListUrl(), {
+      page: 1,
+      size: 10,
+      school: null,
+    })
+    if (result.data.code === '10000') {
+      setData(result.data.result.records)
+    }
+  }
 
   const getCameraList = async () => {
     const result = await axios.get(getCameraListUrl())
@@ -108,6 +168,26 @@ const StepThree = () => {
             message.error(`新增失败`)
           }
           setCameraVisible(false)
+        }
+      })
+  }
+
+  const [bindUser, setBindUser] = useState(false)
+  const onBoundUserSubmit = values => {
+    axios
+      .post(getBindUserUrl(), {
+        cameraId: cameraId,
+        userNo: values.cameraId,
+      })
+      .then(res => {
+        if (res.data.code === '10000') {
+          setBindUser(false)
+          setTimeout(() => {
+            getCameraList()
+          }, 300)
+          message.success(`绑定成功`)
+        } else {
+          message.error(`绑定失败`)
         }
       })
   }
@@ -149,10 +229,16 @@ const StepThree = () => {
   }
 
   const [curData, setCurData] = useState({})
+  const [cameraId, setCameraId] = useState(null)
 
   const open = () => {
     setCurData({})
     setCameraVisible(true)
+  }
+
+  const openBindUser = item => {
+    setCameraId(item.id)
+    setBindUser(true)
   }
 
   const edit = item => {
@@ -175,6 +261,7 @@ const StepThree = () => {
       <div className="table-header">
         <span className="name">用户姓名</span>
         <span className="password">用户密码</span>
+        <span className="user">绑定用户</span>
         <span className="ip-address">连接地址</span>
         <span className="port-address">端口地址</span>
         <span className="state">摄像头状态</span>
@@ -188,6 +275,7 @@ const StepThree = () => {
             <li key={item.id}>
               <span className="name">{item.userName}</span>
               <span className="password">****</span>
+              <span className="user">{item.bindUserName}</span>
               <span className="ip-address">{item.ipAddress}</span>
               <span className="port-address">{item.portAddress}</span>
               <span className="state">
@@ -226,6 +314,14 @@ const StepThree = () => {
                 >
                   删除
                 </Button>
+                <Button
+                  onClick={() => {
+                    openBindUser(item)
+                  }}
+                  type="primary"
+                >
+                  用户绑定
+                </Button>
               </span>
             </li>
           ))
@@ -238,6 +334,14 @@ const StepThree = () => {
           setCameraVisible(false)
         }}
         data={curData}
+      />
+      <BindUser
+        visible={bindUser}
+        onCreate={onBoundUserSubmit}
+        onCancel={() => {
+          setBindUser(false)
+        }}
+        data={data}
       />
     </div>
   )

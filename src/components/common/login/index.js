@@ -22,6 +22,10 @@ const Login = () => {
             res.data.result.user.gateway
           )
           localStorage.setItem(
+            'cameraUrl',
+            res.data.result.camera
+          )
+          localStorage.setItem(
             'userInfo',
             JSON.stringify({
               user: res.data.result.user.token,

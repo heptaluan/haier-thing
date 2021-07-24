@@ -115,28 +115,30 @@
   .tab-three {
     .name,
     .password,
+    .user,
     .ip-address,
     .port-address,
     .state {
-      width: 14%;
+      width: 10%;
     }
 
     .edit-box {
-      width: 30%;
+      width: 40%;
       margin-left: auto;
     }
 
     .user-list {
       .name,
       .password,
+      .user,
       .ip-address,
       .port-address,
       .state {
-        width: 14%;
+        width: 10%;
       }
 
       .edit-box {
-        width: 30%;
+        width: 40%;
       }
     }
   }
