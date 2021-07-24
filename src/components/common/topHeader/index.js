@@ -28,6 +28,7 @@ const TopHeader = () => {
           <Link to="/">物联网场景设计与开发智能平台</Link>
         </div>
         <div className="logout">
+          <div className="user-name">{name}</div>
           <Avatar size={35}>{name}</Avatar>
           <Button
             onClick={() => {

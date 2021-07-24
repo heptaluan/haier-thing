@@ -6,20 +6,20 @@ import axios from 'axios'
 import { getRegisterUrl, getDeleteUrl, getUserToken, getSceneId } from '../../../api/api'
 import 'moment/locale/zh-cn'
 import locale from 'antd/es/date-picker/locale/zh_CN'
-import moment from 'moment'
+// import moment from 'moment'
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel, data }) => {
   const [form] = Form.useForm()
-  const handlePreinstall = () => {
-    const now = moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss')
-    form.setFieldsValue({
-      courseName: '课程名称',
-      startTime: moment(`${now}`, 'YYYY-MM-DD HH:mm:ss'),
-      endTime: moment(`${now}`, 'YYYY-MM-DD HH:mm:ss'),
-      name: '张三',
-      studentCount: '25',
-    })
-  }
+  // const handlePreinstall = () => {
+  //   const now = moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss')
+  //   form.setFieldsValue({
+  //     courseName: '课程名称',
+  //     startTime: moment(`${now}`, 'YYYY-MM-DD HH:mm:ss'),
+  //     endTime: moment(`${now}`, 'YYYY-MM-DD HH:mm:ss'),
+  //     name: '张三',
+  //     studentCount: '25',
+  //   })
+  // }
   return (
     <Modal
       visible={visible}
@@ -38,14 +38,14 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, data }) => {
       }}
     >
       <Form form={form} name="basic" initialValues={{ remember: true }}>
-        <Button
+        {/* <Button
           size="small"
           type="primary"
           className="preinstall"
           onClick={() => handlePreinstall()}
         >
           预设
-        </Button>
+        </Button> */}
         <Form.Item
           label="课程名称"
           name="courseName"

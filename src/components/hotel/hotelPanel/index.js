@@ -6,15 +6,15 @@ import { getRegisterUrl, getDeleteUrl, getUserToken, getSceneId } from '../../..
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   const [form] = Form.useForm()
-  const handlePreinstall = () => {
-    form.setFieldsValue({
-      identityNumber: '420105200001014992',
-      name: '张三',
-      roomNumber: 'A104',
-      stayCount: '3',
-      prePaid: '200'
-    })
-  }
+  // const handlePreinstall = () => {
+  //   form.setFieldsValue({
+  //     identityNumber: '420105200001014992',
+  //     name: '张三',
+  //     roomNumber: 'A104',
+  //     stayCount: '3',
+  //     prePaid: '200'
+  //   })
+  // }
   return (
     <Modal
       visible={visible}
@@ -35,7 +35,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
       }}
     >
       <Form form={form} name="basic" initialValues={{ remember: true }}>
-        <Button size="small" type="primary" className="preinstall" onClick={() => handlePreinstall()}>预设</Button>
+        {/* <Button size="small" type="primary" className="preinstall" onClick={() => handlePreinstall()}>预设</Button> */}
         <Form.Item
           label="身份证号"
           name="identityNumber"

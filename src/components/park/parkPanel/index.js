@@ -9,11 +9,11 @@ axios.defaults.headers.common['Authorization'] = getUserToken()
 
 const CollectionCreateForm = ({ visible, onCreate, onCancel, id }) => {
   const [form] = Form.useForm()
-  const handlePreinstall = () => {
-    form.setFieldsValue({
-      carPlate: '鄂A 83344'
-    })
-  }
+  // const handlePreinstall = () => {
+  //   form.setFieldsValue({
+  //     carPlate: '鄂A 83344'
+  //   })
+  // }
   return (
     <Modal
       visible={visible}
@@ -34,7 +34,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, id }) => {
       }}
     >
       <Form form={form} name="basic" initialValues={{ remember: true }}>
-        <Button size="small" type="primary" className="preinstall" onClick={() => handlePreinstall()}>预设</Button>
+        {/* <Button size="small" type="primary" className="preinstall" onClick={() => handlePreinstall()}>预设</Button> */}
         <Form.Item
           label="车牌号"
           name="carPlate"

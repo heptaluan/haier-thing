@@ -18,6 +18,10 @@ const Login = () => {
         if (res.data.code === '10000') {
           message.success(`登录成功`)
           localStorage.setItem(
+            'gateway',
+            res.data.result.user.gateway
+          )
+          localStorage.setItem(
             'userInfo',
             JSON.stringify({
               user: res.data.result.user.token,
@@ -30,10 +34,15 @@ const Login = () => {
           } else if (res.data.result.role === 'user') {
             history.push('/home')
           }
+          setTimeout(() => {
+            window.location.reload()
+          }, 0);
         } else if (res.data.code === '20006') {
           message.error(`用户名或密码错误`)
         } else if (res.data.code === '20008') {
           message.error(`用户不存在`)
+        } else if (res.data.code === '40000') {
+          message.error(`软件未授权`)
         }
       })
   }

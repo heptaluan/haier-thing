@@ -10,6 +10,8 @@ function useMqtt() {
     getMqttConfig.clientId
   )
 
+  const gateway = localStorage.getItem('gateway')
+
   useEffect(() => {
     client.onConnectionLost = responseObject => {
       if (responseObject.errorCode !== 0) {
@@ -19,10 +21,11 @@ function useMqtt() {
     client.onMessageArrived = message => {
       setData(JSON.parse(message.payloadString))
     }
+
     client.connect({
       onSuccess: () => {
-        client.subscribe('device_data')
-        client.subscribe('card_data')
+        client.subscribe(`device_data_${gateway}`)
+        client.subscribe(`card_data_${gateway}`)
         const message = new PahoMQTT.Message('Hello')
         message.destinationName = 'World'
         client.send(message)
