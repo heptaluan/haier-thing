@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import './index.scss'
-import { Form, Input, Button, Modal, message, Select, Empty } from 'antd'
+import {
+  Form,
+  Input,
+  Button,
+  Modal,
+  message,
+  Select,
+  Empty,
+  Pagination,
+} from 'antd'
 import {
   getUserListUrl,
   getAddUserUrl,
@@ -30,7 +39,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
 
   const [form] = Form.useForm()
 
-  const onSelect = (val) => {
+  const onSelect = val => {
     setVal(val)
     form.setFieldsValue({
       gateway: val,
@@ -109,7 +118,12 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
           <Input className="form-input" placeholder="请选择网关或者手动输入" />
         </Form.Item>
       </Form>
-      <Select value={val} className="form-select" placeholder="请选择网关" onSelect={onSelect}>
+      <Select
+        value={val}
+        className="form-select"
+        placeholder="请选择网关"
+        onSelect={onSelect}
+      >
         {gateway?.map((item, index) => (
           <Option value={item} key={`option-${index}`}>
             {item}
@@ -123,6 +137,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
 const StepOne = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
   const [data, setData] = useState([])
+  const [total, setTotal] = useState(1)
 
   const [schoolList, setschoolList] = useState([])
 
@@ -132,13 +147,14 @@ const StepOne = () => {
   }, [])
 
   // 用户列表
-  const fetchData = async () => {
+  const fetchData = async page => {
     const result = await axios.post(getUserListUrl(), {
-      page: 1,
+      page: page ? page : 1,
       size: 10,
       school: null,
     })
     if (result.data.code === '10000') {
+      setTotal(result.data.result.total)
       setData(result.data.result.records)
     }
   }
@@ -202,6 +218,10 @@ const StepOne = () => {
       })
   }
 
+  const handlePaginationChange = e => {
+    fetchData(e)
+  }
+
   return (
     <div className="tab-one">
       <div className="btn-groups">
@@ -259,6 +279,11 @@ const StepOne = () => {
           ))
         )}
       </ul>
+      {data.length === 0 ? null : (
+        <div className="pagination">
+          <Pagination onChange={handlePaginationChange} total={total} />
+        </div>
+      )}
       <CollectionCreateForm
         visible={visible}
         onCreate={onCreate}
