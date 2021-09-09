@@ -24,6 +24,11 @@ export const getSceneId = () => {
   }
 }
 
+// 获取上传地址
+export const getUploadUrl = () => {
+  return `${basicUrl}/devices/list`
+}
+
 // 获取 token
 export const getUserToken = () => {
   const user = JSON.parse(localStorage.getItem('userInfo'))
