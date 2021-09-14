@@ -1,18 +1,18 @@
 // 测试地址
-const basicUrl = `http://192.168.31.200:9000/api/v1`
-export const getMqttConfig = {
-  ip: '192.168.31.200',
-  port: 61614,
-  clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
-}
+// const basicUrl = `http://192.168.1.160:9000/api/v1`
+// export const getMqttConfig = {
+//   ip: '192.168.1.160',
+//   port: 61614,
+//   clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+// }
 
 // 发布地址
-// const basicUrl = `/api`
-// export const getMqttConfig = {
-//   ip: `${window.location.hostname}`,
-//   port: 61614,
-//   clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8)
-// }
+const basicUrl = `/api`
+export const getMqttConfig = {
+  ip: `${window.location.hostname}`,
+  port: 61614,
+  clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8)
+}
 
 // 获取场景 id
 export const getSceneId = () => {
@@ -26,7 +26,12 @@ export const getSceneId = () => {
 
 // 获取上传地址
 export const getUploadUrl = () => {
-  return `${basicUrl}/devices/list`
+  return `${basicUrl}/user/admin/excelinit`
+}
+
+// 获取下载模板地址
+export const getDownloadUrl = () => {
+  return `${basicUrl}/user/admin/exceldown`
 }
 
 // 获取 token

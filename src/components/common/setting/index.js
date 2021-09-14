@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './index.scss'
 import { Button, message, Tabs, Upload } from 'antd'
-import { getUserToken, getUploadUrl } from '../../../api/api'
+import { getUserToken, getUploadUrl, getDownloadUrl } from '../../../api/api'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
@@ -34,51 +34,26 @@ const Setting = () => {
   }
 
   const props = {
-    name: 'file',
-    action: getUploadUrl(),
-    headers: {
-      authorization: 'authorization-text',
-    },
     showUploadList: false,
-    onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList)
-      }
-      if (info.file.status === 'done') {
-        message.success(`上传成功`)
-      } else if (info.file.status === 'error') {
-        message.error(`上传失败`)
-      }
+    beforeUpload: file => {
+      const formData = new FormData()
+      formData.append('multipartFile', file)
+      axios.post(getUploadUrl(), formData).then(res => {
+        if (res.data.code === '10000') {
+          message.success(`上传成功`)
+        } else if (res.data.code === '20000') {
+          message.error(`上传失败，${res.data.message}`)
+        }
+      })
+      return false
     },
-    // showUploadList: false,
-    // beforeUpload: file => {
-    //   const formData = new FormData()
-    //   formData.append('file', file)
-
-    //   const info = {
-    //     semanticType: this.fileType,
-    //     ownershipType: '2',
-    //     ownerId: this.projectId,
-    //     fileName: file.name
-    //   }
-    //   formData.append('info', JSON.stringify(info))
-    //   axios.post(getUploadUrl(), {
-
-    //   }).then(res => {
-    //     if (res.data.code === '10000') {
-    //       message.success(`上传成功`)
-    //     } else if (res.data.code === '20000') {
-    //       message.success(`上传失败`)
-    //     }
-    //   })
-    // },
-    // onChange: info => {
-    //   console.log(info.fileList);
-    // },
+    onChange: info => {
+      console.log(info.fileList)
+    },
   }
 
   const download = () => {
-    window.open(``)
+    window.open(getDownloadUrl())
   }
 
   return (
