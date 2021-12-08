@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './index.scss'
 import { Button, message, Tabs, Upload } from 'antd'
 import { getUserToken, getUploadUrl, getDownloadUrl } from '../../../api/api'
@@ -15,6 +15,7 @@ const { TabPane } = Tabs
 const Setting = () => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
   const history = useHistory()
+  const stepRef = useRef(null)
   const [curTabKey, setCurTabKey] = useState('1')
   const changeTabs = activeKey => {
     setCurTabKey(activeKey)
@@ -37,14 +38,24 @@ const Setting = () => {
     showUploadList: false,
     beforeUpload: file => {
       const formData = new FormData()
-      formData.append('multipartFile', file)
-      axios.post(getUploadUrl(), formData).then(res => {
-        if (res.data.code === '10000') {
-          message.success(`上传成功`)
-        } else if (res.data.code === '20000') {
-          message.error(`上传失败，${res.data.message}`)
-        }
-      })
+      formData.append('file', file)
+      axios.defaults.headers.common[
+        'X-Access-Token'
+      ] = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Mzc2NzkxODYsInVzZXJuYW1lIjoidGFpbGFpIn0.IcVyBJzx-ZtqcEyXEZPOTFJP118DxssVn2URJDuAz3M`
+      axios
+        .post(`http://192.168.1.204:9999/mission/productInfo/logoUpload`, formData)
+        .then(res => {
+          if (res.data.code === 200) {
+            message.success(`上传成功`)
+            setCurTabKey('1')
+            stepRef.current.updateUserList()
+          } else {
+            message.error(res.data.message)
+          }
+        })
+        .catch(err => {
+          message.error(`请求失败，请检查网络是否通畅后再行尝试！`)
+        })
       return false
     },
     onChange: info => {
@@ -53,7 +64,7 @@ const Setting = () => {
   }
 
   const download = () => {
-    window.open(getDownloadUrl())
+    // window.open(getDownloadUrl())
   }
 
   return (
@@ -85,18 +96,18 @@ const Setting = () => {
       </div>
       <div className="setting-box">
         <div className="card-container">
-          <Tabs defaultActiveKey="1" onChange={changeTabs}>
+          <Tabs defaultActiveKey="1" activeKey={curTabKey} onChange={changeTabs}>
             <TabPane tab="用户管理" key="1">
-              {curTabKey === '1' ? <StepOne /> : <div></div>}
+              <StepOne cRef={stepRef} />
             </TabPane>
             <TabPane tab="学校管理" key="2">
-              {curTabKey === '2' ? <StepTwo /> : <div></div>}
+              <StepTwo />
             </TabPane>
             <TabPane tab="摄像头管理" key="3">
-              {curTabKey === '3' ? <StepThree /> : <div></div>}
+              <StepThree />
             </TabPane>
             <TabPane tab="网关管理" key="4">
-              {curTabKey === '4' ? <StepFour /> : <div></div>}
+              <StepFour />
             </TabPane>
           </Tabs>
         </div>

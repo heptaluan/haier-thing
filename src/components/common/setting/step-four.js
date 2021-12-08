@@ -17,7 +17,7 @@ const StepFour = () => {
   const getList = async () => {
     const result = await axios.get(getGatewayUrl())
     if (result.data.code === '10000') {
-      setList(result.data.result.records)
+      setList(result.data.result)
     }
   }
 
@@ -35,21 +35,21 @@ const StepFour = () => {
             reload()
           }}
         >
-          刷新网关
+          刷新网关列表
         </Button>
       </div>
-      <div className="table-header">
-        <span className="name">网关名称</span>
-        <span className="desc">备注</span>
-      </div>
+      {/* <div className="table-header">
+        <span className="name">网关列表</span>
+        <span className="desc">网关列表</span>
+      </div> */}
       <ul className="user-list">
-        {list.length === 0 ? (
+        {list?.length === 0 ? (
           <Empty />
         ) : (
-          list?.map(item => (
-            <li key={item.id}>
-              <span className="name">{item.schoolName}</span>
-              <span className="desc">{item.remark}</span>
+          list?.map((item, index) => (
+            <li key={index}>
+              <span className="name">网关名称</span>
+              <span className="desc">{item}</span>
             </li>
           ))
         )}

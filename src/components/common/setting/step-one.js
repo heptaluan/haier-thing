@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useImperativeHandle } from 'react'
 import './index.scss'
 import {
   Form,
@@ -134,7 +134,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel, schoolList }) => {
   )
 }
 
-const StepOne = () => {
+const StepOne = ({cRef}) => {
   axios.defaults.headers.common['Authorization'] = getUserToken()
   const [data, setData] = useState([])
   const [total, setTotal] = useState(1)
@@ -145,6 +145,12 @@ const StepOne = () => {
     fetchData()
     getSchoolList()
   }, [])
+
+  useImperativeHandle(cRef, () => ({
+    updateUserList: (newVal) => {
+      fetchData()
+    }
+  }))
 
   // 用户列表
   const fetchData = async page => {
